@@ -1,0 +1,100 @@
+@import url("reset.css");
+
+@font-face {
+    font-family: "Hugmate";
+    src: url("../font/hugmate.woff2");
+}
+
+@font-face {
+    font-family: "Halogen";
+    src: url("../font/halogen.woff2");
+}
+
+body {
+    /* width: 100%;
+    height: 100%; */
+    background: linear-gradient(#e8e8e8, #ffffff);
+    overflow-x: hidden;
+    position: absolute;
+}
+
+h1 {
+    font-size: 270%;
+    word-spacing: 0.5em;
+    font-family: "Hugmate";
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 20%;
+}
+
+p {
+    padding-left: 7%;
+    padding-right: 7%;
+    font-family: "Halogen";
+    font-weight: 100;
+    text-align: center;
+    padding-top: 4%;
+}
+
+h3 {
+    font-weight: 500;
+    word-spacing: 0.5em;
+    font-family: "Hugmate";
+    text-transform: uppercase;
+    text-align: left;
+    margin-top: 30%;
+    margin-left: 5%;
+}
+
+.list {
+    padding: 1% 3%;
+    margin-top: 2%;
+    background: linear-gradient(#FED9FF, #F4BCFF);
+    border-top-left-radius: 8%;
+}
+
+.nickname {
+    width: 15%;
+    border-radius: 35%;
+}
+
+.token {
+    width: 15%;
+}
+
+
+
+
+
+.list {
+    background-color: #f0f0f0; /* Background color for the parent div */
+    height: 100%;
+    border-top-left-radius: 4%;
+    border-top-right-radius: 4%;
+}
+
+.item {
+    font-family: "Hugmate";
+    background-color: #ffffff; /* Background color for the item divs */
+    padding: 3%;
+    margin: 3% 0%;
+    display: flex;
+    align-items: center;
+    -moz-border-radius: 25px; /* FF1+ */
+    -webkit-border-radius: 25px; /* Saf3-4 */
+    border-radius: 25px; /* Opera 10.5, IE 9, Saf5, Chrome */
+}
+
+.userpic {
+    margin-left: -5%;
+    width: 25%;
+}
+
+.nickname {
+    margin-left: -6%;
+}
+
+.token, .num {
+    width: 22%;
+    text-align: right;
+}
