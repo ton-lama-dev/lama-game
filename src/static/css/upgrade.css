@@ -1,0 +1,41 @@
+@import url("reset.css");
+
+@font-face {
+    font-family: "Halogen";
+    src: url("../font/halogen.woff2");
+}
+
+@font-face {
+    font-family: "Hugmate";
+    src: url("../font/hugmate.woff2");
+}
+
+body {
+    background: linear-gradient(#FED9FF, #FED9FF);
+}
+
+h2 {
+    font-family: "Halogen";
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 15%;
+    font-weight: 100;
+    font-size: 110%;
+}
+
+.balance {
+    margin-top: 4%;
+    text-align: center;
+}
+
+.balance img {
+    width: 13%;
+    margin-right: 3%;
+    margin-bottom: 3%;
+}
+
+.balance span {
+    font-family: "Hugmate";
+    font-weight: 100;
+    font-size: 220%;
+}
