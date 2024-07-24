@@ -80,8 +80,8 @@ h3 {
     margin: 3% 0%;
     display: flex;
     align-items: center;
-    -moz-border-radius: 25px; /* FF1+ */
-    -webkit-border-radius: 25px; /* Saf3-4 */
+    /* -moz-border-radius: 25px; FF1+ */
+    /* -webkit-border-radius: 25px; Saf3-4 */
     border-radius: 25px; /* Opera 10.5, IE 9, Saf5, Chrome */
     justify-content: space-evenly;
 }
