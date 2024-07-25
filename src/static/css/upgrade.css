@@ -49,18 +49,19 @@ h2 {
 }
 
 .finger {
-    margin-top: -18%;
-    width: 10%;
+    margin-top: -11%;
+    margin-right: 3%;
+    width: 13%;
     display: inline-block;
 }
 
 .battery {
-    width: 12%;
+    width: 17%;
     margin-top: -18%;
 }
 
-.energy {
-    width: 12%;
+.speed {
+    width: 17%;
     margin-top: -18%;
 }
 
