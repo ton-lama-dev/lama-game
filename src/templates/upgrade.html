@@ -14,21 +14,21 @@
         <span>55.697</span>
     </div>
 
-    <div class="item">
+    <div id="tap-item" class="item">
         <img class="finger" src="../static/img/finger.png" alt="">
         <div class="text">
             <p class="name">Tap Power</p>
             <p class="num">2900</p>
         </div>
     </div>
-    <div class="item">
+    <div id="battery-item" class="item">
         <img class="battery" src="../static/img/battery.png" alt="">
         <div class="text">
             <p class="name">Enegry Limit</p>
             <p class="num">2900</p>
         </div>
     </div>
-    <div class="item">
+    <div id="speed-item" class="item">
         <img class="speed" src="../static/img/speed.png" alt="">
         <div class="text">
             <p class="name">Refill speed</p>
@@ -37,15 +37,48 @@
     </div>
 
     <div id="overlay" class="overlay"></div>
-    <div id="popup" class="popup">
+    <div id="tap-popup" class="popup">
         <div class="popup-content">
-            <h2>Popup Title</h2>
-            <p>This is a sample popup that slides from the bottom.</p>
-            <button id="close-popup">Close</button>
+            <img class="rect" src="../static/img/rect.png" alt="">
+            <img class="upgrade-image" src="../static/img/tap-upgrade.png" alt="">
+            <div class="price">
+                <img class="price-token" src="../static/img/token.png" alt="">
+                <span>1000</span>
+            </div>
+            <span>level 2</span>
+            <h1>Tap Power</h1>
+            <p>+1 tap per second for each level</p>
+            <button>UPGRADE</button>
         </div>
     </div>
-
-    <button id="open-popup">Open Popup</button>
+    <div id="battery-popup" class="popup">
+        <div class="popup-content">
+            <img class="rect" src="../static/img/rect.png" alt="">
+            <img class="upgrade-image" src="../static/img/battery-upgrade.png" alt="">
+            <div class="price">
+                <img class="price-token" src="../static/img/token.png" alt="">
+                <span>1000</span>
+            </div>
+            <span>level 2</span>
+            <h1>Energy Limit</h1>
+            <p>+1000 energy for each level</p>
+            <button>UPGRADE</button>
+        </div>
+    </div>
+    <div id="speed-popup" class="popup">
+        <div class="popup-content">
+            <img class="rect" src="../static/img/rect.png" alt="">
+            <img class="upgrade-image" src="../static/img/speed-upgrade.png" alt="">
+            <div class="price">
+                <img class="price-token" src="../static/img/token.png" alt="">
+                <span>1000</span>
+            </div>
+            <span>level 2</span>
+            <h1>Refill Speed</h1>
+            <p>+0.1 recovery speed for each level</p>
+            <button>UPGRADE</button>
+        </div>
+    </div>
 
     <script src="../static/js/upgrade.js"></script>
 </body>
