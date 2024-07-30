@@ -1,2 +1,50 @@
 @import url("reset.css");
 
+@font-face {
+    font-family: "Halogen";
+    src: url("../font/halogen.woff2");
+}
+
+@font-face {
+    font-family: "Hugmate";
+    src: url("../font/hugmate.woff2");
+}
+
+body {
+    background: linear-gradient(#FED9FF, #FACEFF);
+}
+
+.container {
+    padding-top: 6%;
+}
+
+.switch-container {
+    text-align: center;
+}
+
+.switch {
+    background-color: rgba(182, 132, 203, 25%);
+    display: inline;
+    font-family: "Halogen";
+    text-transform: uppercase;
+    font-size: 200%;
+    padding: 3% 1.5%;
+    border-radius: 20px;
+}
+.switch div {
+    display: inline-block;
+    padding: 1% 2%;
+    border-radius: 20px;
+}
+
+.daily {
+    width: 29%;
+    background-color: rgba(255, 255, 255, 25%);
+}
+
+.tasks {
+    color: rgba(0, 0, 0, 40%);
+}
+
+.tasks, .daily {
+}

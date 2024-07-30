@@ -1,0 +1,16 @@
+.item {
+    background-color: aqua;
+    border-radius: 20px;
+    padding: 5%;
+}
+
+.hamstr {
+    width: 30%;
+    border-radius: 50%;
+}
+
+.text {
+    background-color: black;
+    width: 100px;
+    display: inline-block;
+}

@@ -1,2 +1,119 @@
 @import url("reset.css");
 
+@font-face {
+    font-family: "Halogen";
+    src: url("../font/halogen.woff2");
+}
+
+@font-face {
+    font-family: "Hugmate";
+    src: url("../font/hugmate.woff2");
+}
+
+body {
+    background: linear-gradient(#FED9FF, #FACEFF);
+}
+
+.container {
+    padding-top: 6%;
+    padding-right: 7%;
+    padding-left: 7%;
+    padding-bottom: 7%;
+}
+
+.switch-container {
+    text-align: center;
+}
+
+.switch {
+    background-color: rgba(182, 132, 203, 25%);
+    display: inline;
+    font-family: "Halogen";
+    text-transform: uppercase;
+    font-size: 200%;
+    padding: 3% 1.5%;
+    border-radius: 20px;
+}
+.switch div {
+    display: inline-block;
+    padding: 1% 2%;
+    border-radius: 20px;
+}
+
+.tasks {
+    background-color: rgba(255, 255, 255, 25%);
+    margin-right: -2%;
+}
+
+.daily {
+    margin-left: -2%;
+    width: 29%;
+    color: rgba(0, 0, 0, 40%);
+}
+
+.tasks, .daily {
+}
+
+.token {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    width: 40%;
+}
+
+.missions-available {
+    font-family: "Hugmate";
+    text-align: center;
+    font-size: 140%;
+    margin-bottom: 4%;
+}
+
+.tasks-list {
+    background: linear-gradient(#EC88EE, #BD7FCD);
+    border-radius: 15px;
+    padding: 4% 4% 0% 4%;
+    min-height: 400px;
+}
+.item {
+    background-color: rgba(255, 255, 255);
+    border-radius: 15px;
+    padding: 4%;
+    display: inline-block;
+    font-family: "Halogen";
+    margin-bottom: 4%;
+}
+
+.item-img {
+    width: 20%;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: -12%;
+    margin-right: 2%;
+}
+.item-text {
+    display: inline-block;
+    max-width: 60%;
+}
+.channel-name {
+    font-family: "Hugmate";
+    font-size: 90%;
+}
+.go {
+    width: 5%;
+    display: inline-block;
+    margin-left: 4%;
+    margin-top: -12%;
+}
+.price {
+    background-color: #FE8CE7;
+    display: inline;
+    padding: 0 3%;
+    border-radius: 20px;
+}
+.price-img {
+    width: 7.5%;
+    margin-right: -2%;
+    margin-top: -1%;
+}
