@@ -4,9 +4,9 @@ tg.BackButton.show()
 
 tg.onEvent('backButtonClicked', backCallback)
 function backCallback() {
-    window.location.href = "https://9e10-217-25-86-62.ngrok-free.app/src/templates/";
+    window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/";
 };
 
 document.getElementById("daily-btn").onclick = function() {
-    window.location.href = "https://9e10-217-25-86-62.ngrok-free.app/src/templates/daily.html"
+    window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/daily.html"
 };
