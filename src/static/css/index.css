@@ -87,7 +87,7 @@ body {
 }
 
 .progress-bar {
-    width: 50%; /* Set initial width to 10% */
+    width: 100%; /* Set initial width to 10% */
     background-color: #e08fe0;
     height: 30px;
     border-radius: 20px;
@@ -118,7 +118,8 @@ body {
     /* -webkit-text-fill-color: transparent; */
     pointer-events: none;
     user-select: none;
-    animation: move-up 2s forwards;
+    animation: move-up 1s forwards;
+    color: white;
 }
 
 @keyframes move-up {
