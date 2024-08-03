@@ -5,25 +5,8 @@ const $balance = document.getElementById("balance")
 tg.BackButton.show()
 
 
-function start() {
-  setScore(getScore())
-}
-
-
-function setScore(balance) {
-  localStorage.setItem("balance", balance);
-  $balance.textContent = balance;
-}
-
-
-function getScore() {
-  return Number(localStorage.getItem("balance")) ?? 0;
-}
-
-
 function increaseBalance(num) {
-  setScore(getScore() + num);
-  console.log('here')
+  $balance.textContent = Number($balance.textContent) + num;
 }
 
 
@@ -78,5 +61,3 @@ document.addEventListener('DOMContentLoaded', () => {
       updateProgress(500);
   }, 2000);
 });
-
-start();
