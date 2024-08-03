@@ -1,3 +1,135 @@
+@import url(reset.css);
+
+@font-face {
+    font-family: "Hugmate";
+    src: url("../font/hugmate.woff2");
+}
+
+@font-face {
+    font-family: "Halogen";
+    src: url("../font/halogen.woff2");
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     background-color: white;
+    background: linear-gradient(#FED9FF, #EDA9FF);
+}
+
+.your-balance {
+    padding-top: 10%;
+    text-align: center;
+    font-family: "Halogen";
+    font-size: 150%;
+}
+
+.balance {
+    font-family: "Hugmate";
+    text-align: center;
+    font-size: 300%;
+    /* color: white; */
+    /* text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000; */
+}
+
+.lama {
+    margin-top: 20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    position: relative;
+    --tiltX: 0deg;
+    --tiltY: 0deg;
+    transform: rotateX(var(--tiltX)) rotateY(var(--tiltY));
+    transition: transform 0.2s ease;
+}
+
+.btns-row {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 40px;
+    padding: 2% 7%;
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-top: 10%;
+}
+
+.btns-row img {
+    width: 20%;
+    display: inline-block;
+}
+
+.split {
+    background: #CDBED1;
+    color: #CDBED1;
+    border-radius: 20px;
+    opacity: 0.2;
+}
+
+.progress-container {
+    margin-top: 25%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 80%;
+    max-width: 600px;
+    background-color: #f0d0f0;
+    border-radius: 20px;
+    padding: 0.7%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    width: 50%; /* Set initial width to 10% */
+    background-color: #e08fe0;
+    height: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: width 0.4s ease;
+}
+
+.progress-text {
+    color: white;
+    font-weight: bold;
+    font-family: "Hugmate";
+    position: absolute; /* Positioning it absolutely */
+    width: 100%; /* Making it span the entire container */
+    text-align: center;
+    margin-top: -6%;
+    margin-left: -10%;
+    z-index: 2; /* Ensure the text is on top of the progress bar */
+}
+
+.plus-one {
+    font-size: 150%;
+    position: absolute;
+    font-family: "Halogen";
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* -webkit-text-fill-color: transparent; */
+    pointer-events: none;
+    user-select: none;
+    animation: move-up 2s forwards;
+}
+
+@keyframes move-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
 }
