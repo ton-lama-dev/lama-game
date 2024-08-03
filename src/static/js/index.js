@@ -1,6 +1,9 @@
 let tg = window.Telegram.WebApp
 const $lama = document.getElementById("lama")
 const $balance = document.getElementById("balance")
+const $tasks = document.getElementById("tasks")
+const $upgrade = document.getElementById("upgrade")
+const $friends = document.getElementById("friends")
 
 tg.BackButton.show()
 
@@ -36,6 +39,19 @@ $lama.addEventListener("click", (event) => {
   setTimeout(() => {
     plusOne.remove()
   }, 2000);
+});
+
+
+$tasks.addEventListener("click", function() {
+  window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/tasks.html";
+});
+
+$upgrade.addEventListener("click", function() {
+  window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/upgrade.html";
+});
+
+$friends.addEventListener("click", function() {
+  window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/friends.html";
 });
 
 
