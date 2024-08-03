@@ -11,7 +11,7 @@ const $progressText = document.getElementById("progress-text");
 let availableEnergy = Number($progressText.textContent.split("/")[0]);
 let maxEnergy = Number($progressText.textContent.split("/")[1]);
 let tap = 10;
-let refill = 0.1;
+let refillSpeed = 10;  // per second
 
 tg.BackButton.show();
 
@@ -26,9 +26,15 @@ function increaseBalance(num) {
   $progressText.textContent = `${availableEnergy}/${maxEnergy}`
 };
 
-function decreaseBar(num) {
 
-};
+function refillBar(speed) {
+  availableEnergy += speed
+
+  newWidth = availableEnergy / maxEnergy * 100;
+  $progressBar.style.width = `${newWidth}%`;
+
+  $progressText.textContent = `${availableEnergy}/${maxEnergy}`
+}
 
 
 $lama.addEventListener("click", (event) => {
@@ -60,7 +66,7 @@ $lama.addEventListener("click", (event) => {
       plusOne.remove()
     }, 2000);
   } else {
-    console.log("again  ")
+    console.log("youre out of energy")
   };
 });
 
@@ -76,9 +82,6 @@ $upgrade.addEventListener("click", function() {
 $friends.addEventListener("click", function() {
   window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/friends.html";
 });
-
-
-
 
 // progress bar logic
 document.addEventListener('DOMContentLoaded', () => {
@@ -102,4 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-decreaseBar(1)
+function refillProgressBar() {
+  setInterval(() => {
+      if ((availableEnergy < maxEnergy) && ((maxEnergy - availableEnergy) >= refillSpeed)) {
+          refillBar(refillSpeed);
+      }
+  }, 1000);
+};
+
+refillProgressBar();
