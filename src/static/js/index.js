@@ -71,15 +71,15 @@ $lama.addEventListener("touchstart", (event) => {
 });
 
 $tasks.addEventListener("click", function() {
-  window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/tasks.html";
+  window.location.href = "http://127.0.0.1:5000/tasks";
 });
 
 $upgrade.addEventListener("click", function() {
-  window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/upgrade.html";
+  window.location.href = "http://127.0.0.1:5000/upgrade";
 });
 
 $friends.addEventListener("click", function() {
-  window.location.href = "https://0d9f-31-40-140-89.ngrok-free.app/src/templates/friends.html";
+  window.location.href = "http://127.0.0.1:5000/friends";
 });
 
 

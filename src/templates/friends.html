@@ -12,7 +12,19 @@
     <p>Every time your fried claims LAMA you get 10% cashback</p>
     <h3>my friends</h3>
     <div class="list">
+        {% for friend in friends %}
         <div class="item">
+            <div class="referral">
+                <img src="../static/img/anon.png" alt="" class="userpic">
+                <span class="nickName">{{ friend.name }}</span>
+            </div>
+            <div class="sum">
+                <span class="num">{{ friend.revenue }}</span>
+                <img src="../static/img/token.png" alt="" class="token">
+            </div>
+        </div>
+        {% endfor %}
+        <!-- <div class="item">
             <div class="referral">
                 <img src="../static/img/anon.png" alt="" class="userpic">
                 <span class="nickName">nick_name</span>
@@ -31,17 +43,7 @@
                 <span class="num">0.83</span>
                 <img src="../static/img/token.png" alt="" class="token">
             </div>
-        </div>
-        <div class="item">
-            <div class="referral">
-                <img src="../static/img/anon.png" alt="" class="userpic">
-                <span class="nickName">nick_name</span>
-            </div>
-            <div class="sum">
-                <span class="num">0.83</span>
-                <img src="../static/img/token.png" alt="" class="token">
-            </div>
-        </div>
+        </div> -->
     </div>
 
     <script src="../static/js/friends.js"></script>
