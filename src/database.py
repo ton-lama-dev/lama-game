@@ -11,7 +11,7 @@ def init_db():
         cursor.execute("""CREATE TABLE IF NOT EXISTS users(
                        tg_id INTEGER PRIMARY KEY,
                        balance INTEGER DEFAULT 0,
-                       energy_available INTEGER DEFAULT 944,
+                       energy_available INTEGER DEFAULT 1000,
                        referrer_id INTEGER,
                        reg_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                        done_tasks TEXT DEFAULT '',

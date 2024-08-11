@@ -23,8 +23,7 @@ def master():
     energy_available = db.get("energy_available", user_id=user_id)
     energy_max = db.get("energy_level", user_id=user_id) * 1000
     balance = db.get("balance", user_id=user_id)
-    return render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance,
-                           )
+    return render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance)
 
 
 @app.route("/friends")
@@ -64,7 +63,9 @@ def exit():
     data = request.json
     user_id = data.get("user_id")
     balance = data.get("balance")
+    energy_available = data.get("energy_available")
     db.set(item="balance", value=balance, user_id=user_id)
+    db.set(item="energy_available", value=energy_available, user_id=user_id)
     return "200"
 
 

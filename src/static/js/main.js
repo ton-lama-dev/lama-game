@@ -23,7 +23,8 @@ function updateBalance() {
   if (Number($balance.textContent) != last_balance) {
     const data = {
       "user_id": user_tg_id,
-      "balance": $balance.textContent
+      "balance": $balance.textContent,
+      "energy_available": availableEnergy,
     };
   
     fetch('https://d43a-217-25-86-44.ngrok-free.app/exit', {
@@ -139,7 +140,7 @@ function onBeforeUnload(event) {
   .catch(error => {
     console.error('Error sending data:', error);
   });
-}
+};
 
 
 // Add the event listener for beforeunload
