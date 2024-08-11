@@ -16,10 +16,10 @@ let refillSpeed = 1;  // per second
 
 tg.BackButton.show();
 
-addEventListener("beforeunload", updateBalance);
-var repetition = setInterval(updateBalance, 2000);
-var last_balance = 0
-function updateBalance() {
+addEventListener("beforeunload", update);
+var repetition = setInterval(update, 2000);
+var last_balance = 0;
+function update() {
   if (Number($balance.textContent) != last_balance) {
     const data = {
       "user_id": user_tg_id,
@@ -35,7 +35,7 @@ function updateBalance() {
       body: JSON.stringify(data)
     });
     last_balance = Number($balance.innerHTML)};
-}
+};
 
 
 function increaseBalance(num) {
@@ -46,7 +46,7 @@ function increaseBalance(num) {
   $progressBar.style.width = `${newWidth}%`;
 
   $progressText.textContent = `${availableEnergy}/${maxEnergy}`;
-}
+};
 
 function refillBar(speed) {
   availableEnergy += speed * 10; // because i call this function each 10s
@@ -55,12 +55,12 @@ function refillBar(speed) {
   $progressBar.style.width = `${newWidth}%`;
 
   $progressText.textContent = `${availableEnergy}/${maxEnergy}`;
-}
+};
 
 function setBar() {
   newWidth = availableEnergy / maxEnergy * 100;
   $progressBar.style.width = `${newWidth}%`;
-}
+};
 
 $lama.addEventListener("touchstart", (event) => {
   const rect = $lama.getBoundingClientRect();
