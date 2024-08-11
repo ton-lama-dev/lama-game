@@ -16,8 +16,8 @@ def init_db():
                        reg_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                        done_tasks TEXT DEFAULT '',
                        streak INTEGER DEFAULT 0,
-                       last_claim TIMESTAMP DEFAULT '2000-01-01 00:00:00',
-                       last_login TIMESTAMP DEFAULT '2000-01-01 00:00:00',
+                       last_claim DATETIME DEFAULT '2000-01-01 00:00:00',
+                       last_login DATETIME DEFAULT CURRENT_TIMESTAMP,
                        tap_power INTEGER DEFAULT 1,
                        energy_level INTEGER DEFAULT 1,
                        refill_speed INTEGER DEFAULT 1)""")
@@ -39,6 +39,13 @@ def register_user(user_id, referrer_id=0):
         conn.commit()
 
 
+def login_user(user_id):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE tg_id = ?", (user_id, ))
+        conn.commit()
+
+
 def is_new(user_id):
     with connect_db() as conn:
         cursor = conn.cursor()
@@ -52,3 +59,10 @@ def get(item, user_id):
         cursor = conn.cursor()
         cursor.execute(f"SELECT {item} FROM users WHERE tg_id = ?", (user_id, ))
         return cursor.fetchone()[0]
+
+
+def set(item: str, value, user_id: int):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE users SET {item} = {value} WHERE tg_id = ?", (user_id, ))
+        conn.commit()

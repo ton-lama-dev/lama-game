@@ -1,4 +1,5 @@
 let tg = window.Telegram.WebApp;
+let user_tg_id = tg.initDataUnsafe.user.id;
 
 const $lama = document.getElementById("lama");
 const $balance = document.getElementById("balance");
@@ -14,6 +15,27 @@ let tap = 1;
 let refillSpeed = 1;  // per second
 
 tg.BackButton.show();
+
+addEventListener("beforeunload", updateBalance);
+var repetition = setInterval(updateBalance, 2000);
+var last_balance = 0
+function updateBalance() {
+  if (Number($balance.textContent) != last_balance) {
+    const data = {
+      "user_id": user_tg_id,
+      "balance": $balance.textContent
+    };
+  
+    fetch('https://d43a-217-25-86-44.ngrok-free.app/exit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    last_balance = Number($balance.innerHTML)};
+}
+
 
 function increaseBalance(num) {
   $balance.textContent = Number($balance.textContent) + num;
@@ -96,5 +118,31 @@ function refillProgressBar() {
   }, 10000);
 };
 
+
+function onBeforeUnload(event) {
+  const data = {
+    "user_id": user_tg_id,
+    "balance": $balance.textContent
+  };
+
+  fetch('https://78e7-217-25-86-62.ngrok-free.app/exit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log('Response from server:', result);
+  })
+  .catch(error => {
+    console.error('Error sending data:', error);
+  });
+}
+
+
+// Add the event listener for beforeunload
+window.addEventListener('beforeunload', onBeforeUnload);
 setBar();
 refillProgressBar();
