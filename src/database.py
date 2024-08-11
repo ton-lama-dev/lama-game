@@ -18,9 +18,9 @@ def init_db():
                        streak INTEGER DEFAULT 0,
                        last_claim DATETIME DEFAULT '2000-01-01 00:00:00',
                        last_login DATETIME DEFAULT CURRENT_TIMESTAMP,
-                       tap_power INTEGER DEFAULT 1,
+                       tap_level INTEGER DEFAULT 1,
                        energy_level INTEGER DEFAULT 1,
-                       refill_speed INTEGER DEFAULT 1)""")
+                       refill_level INTEGER DEFAULT 1)""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS tasks(
                        description TEXT DEFAULT 'follow in telegram',
                        name TEXT,
