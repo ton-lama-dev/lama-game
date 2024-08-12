@@ -5,5 +5,5 @@ tg.BackButton.show()
 
 tg.onEvent('backButtonClicked', backCallback)
 function backCallback() {
-    window.location.href = "index.html";
+    window.location.href = `https://5994-217-25-86-44.ngrok-free.app/main?user_id=${user_tg_id}`;
 };

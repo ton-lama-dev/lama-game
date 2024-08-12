@@ -19,9 +19,10 @@ def index():
 @app.route("/main")
 def master():
     user_id = int(request.args.get("user_id"))
-    referrer_id = int(request.args.get("referrer_id")) if request.args.get("referrer_id") != "null" and request.args.get("referrer_id") != None else 0
+    referrer_id = int(request.args.get("referrer_id")) if request.args.get("referrer_id") != "null" and request.args.get("referrer_id") != None and request.args.get("referrer_id") != user_id else 0
+    name = request.args.get("name")
     if db.is_new(user_id):
-        db.register_user(user_id=user_id, referrer_id=referrer_id)
+        db.register_user(user_id=user_id, referrer_id=referrer_id, name=name)
 
     energy_available = db.get("energy_available", user_id=user_id) + get_refilled_energy(user_id=user_id)
     energy_level = db.get(item="energy_level", user_id=user_id)
@@ -42,19 +43,17 @@ def get_refilled_energy(user_id: int) -> int:
 
 @app.route("/friends")
 def friends():
-    friends = [{
-        "name": "bruh1",
-        "revenue": 1.89
-    }, 
-    {
-        "name": "bruh2",
-        "revenue": 0.31
-    }, 
-    {
-        "name": "bruh3",
-        "revenue": 12
-    }]
-    return render_template("friends.html", friends=friends)
+    user_id = int(request.args.get("user_id"))
+    data = dict()
+    friends_ids = db.get_friends_ids(user_id=user_id)
+    print("friends ids:", friends_ids)
+    for id in friends_ids:
+        revenue = round(db.get(item="balance", user_id=id) / 100 * int(db.get(item="revenue_percent", user_id=user_id)))
+        name = db.get(item="name", user_id=id)
+        data[id] = {"revenue": revenue,
+                    "name": name}
+    print(data)
+    return render_template("friends.html", data=data)
 
 
 @app.route("/upgrade")

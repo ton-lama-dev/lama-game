@@ -103,11 +103,11 @@ $tasks.addEventListener("click", function() {
 });
 
 $upgrade.addEventListener("click", function() {
-  window.location.href = "https://5994-217-25-86-44.ngrok-free.app/upgrade";
+  window.location.href = `https://5994-217-25-86-44.ngrok-free.app/upgrade?user_id=${user_tg_id}`;
 });
 
 $friends.addEventListener("click", function() {
-  window.location.href = "https://5994-217-25-86-44.ngrok-free.app/friends";
+  window.location.href = `https://5994-217-25-86-44.ngrok-free.app/friends?user_id=${user_tg_id}`;
 });
 
 

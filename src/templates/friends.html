@@ -9,17 +9,17 @@
 </head>
 <body>
     <h1>1 friend</h1>
-    <p>Every time your fried claims LAMA you get 10% cashback</p>
+    <p>Every time your fried claims LAMA you get 20% cashback</p>
     <h3>my friends</h3>
     <div class="list">
-        {% for friend in friends %}
+        {% for key, value in data.items() %}
         <div class="item">
             <div class="referral">
                 <img src="../static/img/anon.png" alt="" class="userpic">
-                <span class="nickName">{{ friend.name }}</span>
+                <span class="nickName">{{ value["name"] }}</span>
             </div>
             <div class="sum">
-                <span class="num">{{ friend.revenue }}</span>
+                <span class="num">{{ value["revenue"] }}</span>
                 <img src="../static/img/token.png" alt="" class="token">
             </div>
         </div>
