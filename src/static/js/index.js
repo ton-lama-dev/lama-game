@@ -9,4 +9,4 @@ const searchParams = new URLSearchParams(url.search);
 const startAppNumber = searchParams.get('tgWebAppStartParam');
 
 
-window.location.href = `https://d43a-217-25-86-44.ngrok-free.app/main?user_id=${user_tg_id}&referrer_id=${startAppNumber}`;
+window.location.href = `https://5994-217-25-86-44.ngrok-free.app/main?user_id=${user_tg_id}&referrer_id=${startAppNumber}`;

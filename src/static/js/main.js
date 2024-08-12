@@ -27,7 +27,7 @@ function update() {
       "energy_available": availableEnergy,
     };
   
-    fetch('https://d43a-217-25-86-44.ngrok-free.app/exit', {
+    fetch('https://5994-217-25-86-44.ngrok-free.app/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -99,15 +99,15 @@ $lama.addEventListener("touchstart", (event) => {
 });
 
 $tasks.addEventListener("click", function() {
-  window.location.href = `https://d43a-217-25-86-44.ngrok-free.app/tasks?user_id=${user_tg_id}`;
+  window.location.href = `https://5994-217-25-86-44.ngrok-free.app/tasks?user_id=${user_tg_id}`;
 });
 
 $upgrade.addEventListener("click", function() {
-  window.location.href = "https://d43a-217-25-86-44.ngrok-free.app/upgrade";
+  window.location.href = "https://5994-217-25-86-44.ngrok-free.app/upgrade";
 });
 
 $friends.addEventListener("click", function() {
-  window.location.href = "https://d43a-217-25-86-44.ngrok-free.app/friends";
+  window.location.href = "https://5994-217-25-86-44.ngrok-free.app/friends";
 });
 
 

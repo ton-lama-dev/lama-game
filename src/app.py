@@ -22,19 +22,18 @@ def master():
     referrer_id = int(request.args.get("referrer_id")) if request.args.get("referrer_id") != "null" and request.args.get("referrer_id") != None else 0
     if db.is_new(user_id):
         db.register_user(user_id=user_id, referrer_id=referrer_id)
-    db.login_user(user_id=user_id)
 
     energy_available = db.get("energy_available", user_id=user_id) + get_refilled_energy(user_id=user_id)
     energy_level = db.get(item="energy_level", user_id=user_id)
     energy_max = energy_level * cf.ENERGY_LEVELS[energy_level - 1]
     if energy_available >= energy_max:
         energy_available = energy_max
-    print(energy_level)
     balance = db.get("balance", user_id=user_id)
+    db.login_user(user_id=user_id)
     return render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance)
 
 def get_refilled_energy(user_id: int) -> int:
-    current_time = current_time = datetime.now()
+    current_time = datetime.utcnow().replace(microsecond=0)
     last_login_time = datetime.strptime(db.get(item="last_login", user_id=user_id), "%Y-%m-%d %H:%M:%S")
     time_difference_seconds = (current_time - last_login_time).total_seconds()
     refill_level = db.get(item="refill_level", user_id=user_id)
@@ -73,7 +72,7 @@ def tasks():
     return render_template("tasks.html")
 
 
-@app.route("/exit", methods=["POST"])
+@app.route("/update", methods=["POST"])
 def exit():
     data = request.json
     user_id = data.get("user_id")
