@@ -1,15 +1,60 @@
 let tg = window.Telegram.WebApp;
 let user_tg_id = tg.initDataUnsafe.user.id;
 
+let $tapUpgradeButton = document.getElementById("tap-upgrade-btn");
+let $energyUpgradeButton = document.getElementById("energy-upgrade-btn");
+let $refillUpgradeButton = document.getElementById("refill-upgrade-btn");
+
 tg.BackButton.show()
 
 tg.onEvent('backButtonClicked', backCallback)
 function backCallback() {
-    window.location.href = "index.html";
+    window.location.href = `https://5994-217-25-86-44.ngrok-free.app/main?user_id=${user_tg_id}`;
 };
 
 
-// Popup, written by ChatGPT 
+$tapUpgradeButton.addEventListener("click", () => {
+    const data = {
+        "user_id": user_tg_id,
+    };
+    fetch(`https://5994-217-25-86-44.ngrok-free.app/upgrade_tap`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    window.location.reload();
+});
+$energyUpgradeButton.addEventListener("click", () => {
+    const data = {
+        "user_id": user_tg_id,
+    };
+    fetch(`https://5994-217-25-86-44.ngrok-free.app/upgrade_energy`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    window.location.reload();
+});
+$refillUpgradeButton.addEventListener("click", () => {
+    const data = {
+        "user_id": user_tg_id,
+    };
+    fetch(`https://5994-217-25-86-44.ngrok-free.app/upgrade_refill`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    window.location.reload();
+});
+
+
+// Popup
 document.addEventListener('DOMContentLoaded', function() {
     const openTapPopup = document.getElementById('tap-item');
     const openBatteryPopup = document.getElementById('battery-item');

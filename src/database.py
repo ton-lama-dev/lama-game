@@ -1,5 +1,7 @@
 import sqlite3
 
+import config as cf
+
 
 def connect_db():
     return sqlite3.connect("data.db")
@@ -54,6 +56,49 @@ def is_new(user_id):
         cursor.execute("SELECT tg_id FROM users WHERE tg_id = ?", (user_id, ))
         result = cursor.fetchone()
         return result == None
+
+
+def upgrade_tap(user_id: int) -> bool:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        old_level = cursor.execute("SELECT tap_level FROM users WHERE tg_id = ?", (user_id, ))
+        old_level = cursor.fetchone()[0]
+        upgrade_price = cf.TAP_POWER_UPGRADE_COST[old_level - 1]
+        balance = int(get(item="balance", user_id=user_id))
+        if balance < upgrade_price:
+            return False
+        cursor.execute("UPDATE users SET tap_level = ? WHERE tg_id = ?", (old_level + 1, user_id))
+        cursor.execute("UPDATE users SET balance = ? WHERE tg_id = ?", (balance - upgrade_price, user_id))
+        conn.commit()
+        return True
+    
+def upgrade_energy(user_id: int) -> bool:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        old_level = cursor.execute("SELECT energy_level FROM users WHERE tg_id = ?", (user_id, ))
+        old_level = cursor.fetchone()[0]
+        upgrade_price = cf.ENERGY_UPGRADE_COST[old_level - 1]
+        balance = int(get(item="balance", user_id=user_id))
+        if balance < upgrade_price:
+            return False
+        cursor.execute("UPDATE users SET energy_level = ? WHERE tg_id = ?", (old_level + 1, user_id))
+        cursor.execute("UPDATE users SET balance = ? WHERE tg_id = ?", (balance - upgrade_price, user_id))
+        conn.commit()
+        return True
+    
+def upgrade_refill(user_id: int) -> bool:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        old_level = cursor.execute("SELECT refill_level FROM users WHERE tg_id = ?", (user_id, ))
+        old_level = cursor.fetchone()[0]
+        upgrade_price = cf.REFILL_SPEED_UPGRADE_COST[old_level - 1]
+        balance = int(get(item="balance", user_id=user_id))
+        if balance < upgrade_price:
+            return False
+        cursor.execute("UPDATE users SET refill_level = ? WHERE tg_id = ?", (old_level + 1, user_id))
+        cursor.execute("UPDATE users SET balance = ? WHERE tg_id = ?", (balance - upgrade_price, user_id))
+        conn.commit()
+        return True
 
 
 def get_friends_ids(user_id: int) -> list[int]:

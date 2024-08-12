@@ -58,7 +58,17 @@ def friends():
 
 @app.route("/upgrade")
 def upgrade():
-    return render_template("upgrade.html")
+    user_id = int(request.args.get("user_id"))
+    balance = db.get("balance", user_id=user_id)
+    tap_level = db.get("tap_level", user_id=user_id)
+    energy_level = db.get("energy_level", user_id=user_id)
+    refill_level = db.get("refill_level", user_id=user_id)
+    tap_upgrade_price = cf.TAP_POWER_UPGRADE_COST[tap_level - 1]
+    energy_upgrade_price = cf.ENERGY_UPGRADE_COST[energy_level - 1]
+    refill_upgrade_price = cf.REFILL_SPEED_UPGRADE_COST[refill_level - 1]
+
+    return render_template("upgrade.html", balance=balance, tap_upgrade_price=tap_upgrade_price, energy_upgrade_price=energy_upgrade_price,
+                           refill_upgrade_price=refill_upgrade_price, tap_level=tap_level, energy_level=energy_level, refill_level=refill_level)
 
 
 @app.route("/daily")
@@ -72,13 +82,35 @@ def tasks():
 
 
 @app.route("/update", methods=["POST"])
-def exit():
+def update():
     data = request.json
     user_id = data.get("user_id")
     balance = data.get("balance")
     energy_available = data.get("energy_available")
     db.set(item="balance", value=balance, user_id=user_id)
     db.set(item="energy_available", value=energy_available, user_id=user_id)
+    return "200"
+
+
+@app.route("/upgrade_tap", methods=["POST"])
+def upgrade_tap():
+    data = request.json
+    user_id = data.get("user_id")
+    db.upgrade_tap(user_id=user_id)
+    return "200"
+
+@app.route("/upgrade_energy", methods=["POST"])
+def upgrade_energy():
+    data = request.json
+    user_id = data.get("user_id")
+    db.upgrade_energy(user_id=user_id)
+    return "200"
+
+@app.route("/upgrade_refill", methods=["POST"])
+def upgrade_refill():
+    data = request.json
+    user_id = data.get("user_id")
+    db.upgrade_refill(user_id=user_id)
     return "200"
 
 
