@@ -26,13 +26,25 @@ def init_db():
                        energy_level INTEGER DEFAULT 1,
                        refill_level INTEGER DEFAULT 1)""")
         cursor.execute("""CREATE TABLE IF NOT EXISTS tasks(
+                       id INTEGER PRIMARY KEY,
+                       public_link TEXT,
+                       times_done INTEGER DEFAULT 0,
                        description TEXT DEFAULT 'follow in telegram',
                        name TEXT,
                        reward INTEGER,
                        link TEXT,
                        img_link TEXT,
                        needs_checking INTEGER DEFAULT 0,
-                       is_active INTEGER DEFAULT 0)""")
+                       is_active INTEGER DEFAULT 1)""")
+        conn.commit()
+
+
+def add_task(id: int, description: str, name: str, reward: int,
+             link: str, img_link: str, needs_checking: int, public_link: str):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO tasks (id, public_link, description, name, reward, link, img_link, needs_checking) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
+                       (id, public_link, description, name, reward, link, img_link, needs_checking))
         conn.commit()
 
 
@@ -106,10 +118,35 @@ def get_friends_ids(user_id: int) -> list[int]:
         cursor = conn.cursor()
         cursor.execute("SELECT tg_id FROM users WHERE referrer_id = ?", (user_id, ))
         data = cursor.fetchall()
-        print("data:", data)
         result = [i[0] for i in data]
-        print("result", result)
         return result
+
+
+def get_tasks_ids(user_id: int) -> list[int]:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM tasks WHERE is_active = ?", (1, ))
+        data = cursor.fetchall()
+        result = [i[0] for i in data]
+
+        return result
+
+
+def get_all_tasks_ids() -> list[int]:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM tasks")
+        data = cursor.fetchall()
+        result = [i[0] for i in data]
+
+        return result
+
+
+def get_channel_public_link(task_id: int) -> str:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT public_link FROM tasks WHERE id = ?", (task_id, ))
+        return cursor.fetchone()[0]
 
 
 def get(item: str, user_id: int):
@@ -118,6 +155,11 @@ def get(item: str, user_id: int):
         cursor.execute(f"SELECT {item} FROM users WHERE tg_id = ?", (user_id, ))
         return cursor.fetchone()[0]
 
+def tasks_get(item: str, task_id: int):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT {item} FROM tasks WHERE id = ?", (task_id, ))
+        return cursor.fetchone()[0]
 
 def set(item: str, value, user_id: int):
     with connect_db() as conn:

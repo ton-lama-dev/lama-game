@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 
+import telegram
+from telegram import Bot, error
+
 from datetime import datetime
+from random import randint
 
 import database as db
 import config as cf
@@ -9,6 +13,8 @@ import config as cf
 
 app = Flask(__name__)
 CORS(app)
+
+bot = Bot(token=cf.BOT_TOKEN)
 
 
 @app.route("/")
@@ -46,13 +52,11 @@ def friends():
     user_id = int(request.args.get("user_id"))
     data = dict()
     friends_ids = db.get_friends_ids(user_id=user_id)
-    print("friends ids:", friends_ids)
     for id in friends_ids:
         revenue = round(db.get(item="balance", user_id=id) / 100 * int(db.get(item="revenue_percent", user_id=user_id)))
         name = db.get(item="name", user_id=id)
         data[id] = {"revenue": revenue,
                     "name": name}
-    print(data)
     return render_template("friends.html", data=data)
 
 
@@ -78,7 +82,58 @@ def daily():
 
 @app.route("/tasks")
 def tasks():
-    return render_template("tasks.html")
+    user_id = int(request.args.get("user_id"))
+    tasks_ids = db.get_tasks_ids(user_id=user_id)
+    print(tasks_ids)
+    data = get_tasks_data(tasks_ids=tasks_ids)
+    print(data)
+    return render_template("tasks.html", data=data)
+
+def get_tasks_data(tasks_ids: list):
+    data = dict()
+    for id in tasks_ids:
+        description = db.tasks_get(item="description", task_id=id)
+        name = db.tasks_get(item="name", task_id=id)
+        reward = int(db.tasks_get(item="reward", task_id=id))
+        link = db.tasks_get(item="link", task_id=id)
+        img_link = db.tasks_get(item="img_link", task_id=id)
+        task_id = int(db.tasks_get(item="id", task_id=id))
+        public_link = db.tasks_get(item="public_link", task_id=id)
+        times_done = int(db.tasks_get(item="times_done", task_id=id))
+        needs_checking = db.tasks_get(item="needs_checking", task_id=id)
+        is_active = db.tasks_get(item="is_active", task_id=id)
+        data[id] = {"description": description,
+                    "name": name,
+                    "reward": reward,
+                    "link": link,
+                    "img_link": img_link,
+                    "task_id": task_id,
+                    "public_link": public_link,
+                    "times_done": times_done,
+                    "needs_checking": needs_checking,
+                    "is_active": is_active}
+
+    return data
+
+
+@app.route('/check_subscription', methods=['POST'])
+def check_subscription():
+    data = request.json
+    user_id = int(data.get('user_id'))
+    task_id = int(data.get('task_id'))
+    if not user_id:
+        return jsonify({"error": "user_id is required"}), 400
+
+    try:
+        public_link = db.get_channel_public_link(task_id=task_id)
+        member_status = bot.get_chat_member(chat_id=public_link, user_id=user_id)
+        print(member_status)
+        if member_status in ['member', 'administrator', 'creator']:
+            return jsonify({"subscribed": True}), 200
+        else:
+            return jsonify({"subscribed": False}), 401
+    except error.TelegramError as e:
+        return jsonify({"error": str(e)}), 402
 
 
 @app.route("/update", methods=["POST"])
@@ -90,6 +145,13 @@ def update():
     db.set(item="balance", value=balance, user_id=user_id)
     db.set(item="energy_available", value=energy_available, user_id=user_id)
     return "200"
+
+
+@app.route("/admin")
+def admin():
+    tasks_ids = db.get_all_tasks_ids()
+    data = get_tasks_data(tasks_ids=tasks_ids)
+    return render_template("admin.html", data=data)
 
 
 @app.route("/upgrade_tap", methods=["POST"])
@@ -113,6 +175,23 @@ def upgrade_refill():
     db.upgrade_refill(user_id=user_id)
     return "200"
 
+
+@app.route("/add_task", methods=["POST"])
+def add_task():
+    password = request.form.get("password")
+    description = request.form.get('description')
+    name = request.form.get('name')
+    reward = int(request.form.get('reward'))
+    public_link = request.form.get('public_link')
+    link = request.form.get('link')
+    img_link = request.form.get('img_link')
+    needs_checking = int('needs_checking' in request.form)
+    id = randint(111111, 999999)
+    if password == cf.ADMIN_PASS:
+        db.add_task(id=id, description=description, name=name, reward=reward, public_link=public_link,
+                    link=link, img_link=img_link, needs_checking=needs_checking)
+        return "<h1>task added successfully</h1>"
+    return "<h1>error</h1>"
 
 if __name__ == "__main__":
     db.init_db()

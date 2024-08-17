@@ -18,66 +18,24 @@
         <img class="token" src="../static/img/tasks-token.png" alt="">
         <h1 class="missions-available">MISSIONS AVAILABLE</h1>
         <div class="tasks-list">
-            <div class="item">
-                <img class="item-img" src="../static/img/hamstr.jpg" alt="">
-                <div class="item-text">
-                    <p class="follow">follow in telegram</p>
-                    <p class="channel-name">Lama Community</p>
-                    <div class="price">
-                        <img src="../static/img/token.png" alt="" class="price-img">
-                        <span>1000</span>
-                    </div>
-                </div>
-                <img src="../static/img/go.png" alt="" class="go">
-            </div>
-            <div class="item">
-                <img class="item-img" src="../static/img/hamstr.jpg" alt="">
-                <div class="item-text">
-                    <p class="follow">follow in telegram</p>
-                    <p class="channel-name">Lama Community</p>
-                    <div class="price">
-                        <img src="../static/img/token.png" alt="" class="price-img">
-                        <span>1000</span>
-                    </div>
-                </div>
-                <img src="../static/img/go.png" alt="" class="go">
-            </div>
-            <div class="item">
-                <img class="item-img" src="../static/img/hamstr.jpg" alt="">
-                <div class="item-text">
-                    <p class="follow">follow in telegram</p>
-                    <p class="channel-name">Lama Community</p>
-                    <div class="price">
-                        <img src="../static/img/token.png" alt="" class="price-img">
-                        <span>1000</span>
-                    </div>
-                </div>
-                <img src="../static/img/go.png" alt="" class="go">
-            </div>
-            <div class="item">
-                <img class="item-img" src="../static/img/hamstr.jpg" alt="">
-                <div class="item-text">
-                    <p class="follow">follow in telegram</p>
-                    <p class="channel-name">Lama Community</p>
-                    <div class="price">
-                        <img src="../static/img/token.png" alt="" class="price-img">
-                        <span>1000</span>
-                    </div>
-                </div>
-                <img src="../static/img/go.png" alt="" class="go">
-            </div>
-            <div class="item">
-                <img class="item-img" src="../static/img/hamstr.jpg" alt="">
-                <div class="item-text">
-                    <p class="follow">follow in telegram</p>
-                    <p class="channel-name">Lama Community</p>
-                    <div class="price">
-                        <img src="../static/img/token.png" alt="" class="price-img">
-                        <span>1000</span>
-                    </div>
-                </div>
-                <img src="../static/img/go.png" alt="" class="go">
-            </div>
+            {% if data != None %}
+                {% for key, value in data.items() %}
+                    <a href="{{ value['link'] }}" class="item-link">
+                        <div class='item' id="{{ value['task_id'] }}">
+                            <img class="item-img" src='{{ value["img_link"] }}' alt="">
+                            <div class="item-text">
+                                <p class="follow">{{ value["description"] }}</p>
+                                <p class="channel-name">{{ value["name"] }}</p>
+                                <div class="price">
+                                    <img src="../static/img/token.png" alt="" class="price-img">
+                                    <span>{{ value["reward"] }}</span>
+                                </div>
+                            </div>
+                            <img src="../static/img/go.png" alt="" class="go">
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 

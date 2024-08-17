@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="../static/css/admin.css">
+</head>
+<body>
+    <div class="add-task-container">
+        <h1>Add task</h1>
+        <form action="add_task" method="post">
+            <label for="password">Password </label>
+            <input type="text" name="password">
+            <br>
+            <br>
+            <label for="description">Description </label>
+            <input type="text" name="description">
+            <br>
+            <br>
+            <label for="name">Name </label>
+            <input type="text" name="name">
+            <br>
+            <br>
+            <label for="reward">Reward </label>
+            <input type="number" name="reward">
+            <br>
+            <br>
+            <label for="public_link">Public Link </label>
+            <input type="text" name="public_link">
+            <br>
+            <br>
+            <label for="link">Link </label>
+            <input type="url" name="link">
+            <br>
+            <br>
+            <label for="img_link">Image link </label>
+            <input type="url" name="img_link">
+            <br>
+            <br>
+            <input type="checkbox" name="needs_checking" checked>
+            <label for="needs_checking">Needs checking </label>
+            <br>
+            <br>
+            <input class="submit-btn" type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="tasks-list-container">
+        <h1>Tasks list</h1>
+        {% if data != None %}
+            {% for key, value in data.items() %}
+                <p>id: {{ task["id"] }} name: {{ task["name"] }} link: {{ task["link"] }} done: {{ task["done_times"] }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

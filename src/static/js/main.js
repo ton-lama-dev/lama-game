@@ -99,7 +99,7 @@ $lama.addEventListener("touchstart", (event) => {
 });
 
 $tasks.addEventListener("click", function() {
-  window.location.href = `https://5994-217-25-86-44.ngrok-free.app/tasks?user_id=${user_tg_id}`;
+  window.location.href = `https://b042-217-25-86-16.ngrok-free.app/tasks?user_id=${user_tg_id}`;
 });
 
 $upgrade.addEventListener("click", function() {
