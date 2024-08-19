@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../static/css/tasks.css">
     <title>Document</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init()</script> -->
 </head>
 <body>
     <div class="container">
@@ -20,7 +22,7 @@
         <div class="tasks-list">
             {% if data != None %}
                 {% for key, value in data.items() %}
-                    <a href="{{ value['link'] }}" class="item-link">
+                    <a href="#" class="item-link">
                         <div class='item' id="{{ value['task_id'] }}">
                             <img class="item-img" src='{{ value["img_link"] }}' alt="">
                             <div class="item-text">

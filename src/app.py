@@ -1,29 +1,23 @@
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
-
+from quart import Quart, request, jsonify, render_template
+from quart_cors import cors
 import telegram
 from telegram import Bot, error
-
 from datetime import datetime
 from random import randint
-
 import database as db
 import config as cf
 
-
-app = Flask(__name__)
-CORS(app)
+app = Quart(__name__)
+cors(app)
 
 bot = Bot(token=cf.BOT_TOKEN)
 
-
 @app.route("/")
-def index():
-    return render_template("index.html")
-
+async def index():
+    return await render_template("index.html")
 
 @app.route("/main")
-def master():
+async def master():
     user_id = int(request.args.get("user_id"))
     referrer_id = int(request.args.get("referrer_id")) if request.args.get("referrer_id") != "null" and request.args.get("referrer_id") != None and request.args.get("referrer_id") != user_id else 0
     name = request.args.get("name")
@@ -37,7 +31,7 @@ def master():
         energy_available = energy_max
     balance = db.get("balance", user_id=user_id)
     db.login_user(user_id=user_id)
-    return render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance)
+    return await render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance)
 
 def get_refilled_energy(user_id: int) -> int:
     current_time = datetime.utcnow().replace(microsecond=0)
@@ -46,9 +40,8 @@ def get_refilled_energy(user_id: int) -> int:
     refill_level = db.get(item="refill_level", user_id=user_id)
     return round(time_difference_seconds * refill_level * cf.REFILL_LEVELS[refill_level - 1])
 
-
 @app.route("/friends")
-def friends():
+async def friends():
     user_id = int(request.args.get("user_id"))
     data = dict()
     friends_ids = db.get_friends_ids(user_id=user_id)
@@ -57,11 +50,10 @@ def friends():
         name = db.get(item="name", user_id=id)
         data[id] = {"revenue": revenue,
                     "name": name}
-    return render_template("friends.html", data=data)
-
+    return await render_template("friends.html", data=data)
 
 @app.route("/upgrade")
-def upgrade():
+async def upgrade():
     user_id = int(request.args.get("user_id"))
     balance = db.get("balance", user_id=user_id)
     tap_level = db.get("tap_level", user_id=user_id)
@@ -71,23 +63,19 @@ def upgrade():
     energy_upgrade_price = cf.ENERGY_UPGRADE_COST[energy_level - 1]
     refill_upgrade_price = cf.REFILL_SPEED_UPGRADE_COST[refill_level - 1]
 
-    return render_template("upgrade.html", balance=balance, tap_upgrade_price=tap_upgrade_price, energy_upgrade_price=energy_upgrade_price,
+    return await render_template("upgrade.html", balance=balance, tap_upgrade_price=tap_upgrade_price, energy_upgrade_price=energy_upgrade_price,
                            refill_upgrade_price=refill_upgrade_price, tap_level=tap_level, energy_level=energy_level, refill_level=refill_level)
 
-
 @app.route("/daily")
-def daily():
-    return render_template("daily.html")
-
+async def daily():
+    return await render_template("daily.html")
 
 @app.route("/tasks")
-def tasks():
+async def tasks():
     user_id = int(request.args.get("user_id"))
     tasks_ids = db.get_tasks_ids(user_id=user_id)
-    print(tasks_ids)
     data = get_tasks_data(tasks_ids=tasks_ids)
-    print(data)
-    return render_template("tasks.html", data=data)
+    return await render_template("tasks.html", data=data)
 
 def get_tasks_data(tasks_ids: list):
     data = dict()
@@ -115,10 +103,9 @@ def get_tasks_data(tasks_ids: list):
 
     return data
 
-
 @app.route('/check_subscription', methods=['POST'])
-def check_subscription():
-    data = request.json
+async def check_subscription():
+    data = await request.json
     user_id = int(data.get('user_id'))
     task_id = int(data.get('task_id'))
     if not user_id:
@@ -126,19 +113,18 @@ def check_subscription():
 
     try:
         public_link = db.get_channel_public_link(task_id=task_id)
-        member_status = bot.get_chat_member(chat_id=public_link, user_id=user_id)
-        print(member_status)
-        if member_status in ['member', 'administrator', 'creator']:
+        member_status = await bot.get_chat_member(chat_id=public_link, user_id=user_id)
+        print(member_status.status)
+        if member_status.status in ['member', 'administrator', 'creator']:
             return jsonify({"subscribed": True}), 200
         else:
-            return jsonify({"subscribed": False}), 401
+            return jsonify({"subscribed": False}), 410
     except error.TelegramError as e:
-        return jsonify({"error": str(e)}), 402
-
+        return jsonify({"error": str(e)}), 420
 
 @app.route("/update", methods=["POST"])
-def update():
-    data = request.json
+async def update():
+    data = await request.json
     user_id = data.get("user_id")
     balance = data.get("balance")
     energy_available = data.get("energy_available")
@@ -146,38 +132,35 @@ def update():
     db.set(item="energy_available", value=energy_available, user_id=user_id)
     return "200"
 
-
 @app.route("/admin")
-def admin():
+async def admin():
     tasks_ids = db.get_all_tasks_ids()
     data = get_tasks_data(tasks_ids=tasks_ids)
-    return render_template("admin.html", data=data)
-
+    return await render_template("admin.html", data=data)
 
 @app.route("/upgrade_tap", methods=["POST"])
-def upgrade_tap():
-    data = request.json
+async def upgrade_tap():
+    data = await request.json
     user_id = data.get("user_id")
     db.upgrade_tap(user_id=user_id)
     return "200"
 
 @app.route("/upgrade_energy", methods=["POST"])
-def upgrade_energy():
-    data = request.json
+async def upgrade_energy():
+    data = await request.json
     user_id = data.get("user_id")
     db.upgrade_energy(user_id=user_id)
     return "200"
 
 @app.route("/upgrade_refill", methods=["POST"])
-def upgrade_refill():
-    data = request.json
+async def upgrade_refill():
+    data = await request.json
     user_id = data.get("user_id")
     db.upgrade_refill(user_id=user_id)
     return "200"
 
-
 @app.route("/add_task", methods=["POST"])
-def add_task():
+async def add_task():
     password = request.form.get("password")
     description = request.form.get('description')
     name = request.form.get('name')
