@@ -10,6 +10,11 @@
     src: url("../font/hugmate.woff2");
 }
 
+@font-face {
+    font-family: "SA";
+    src: url("../font/SALongBeach.otf");
+}
+
 body {
     background: linear-gradient(#FED9FF, #FACEFF);
 }
@@ -83,24 +88,37 @@ a {
     border-radius: 15px;
     padding: 4%;
     display: inline-block;
-    font-family: "Halogen";
+    font-family: "SA";
     margin-bottom: 4%;
+}
+.item.done {
+    opacity: 0.5;
+}
+.item.done img.go {
+    width: 10%;
+    margin-left: 2%;
 }
 
 .item-img {
     width: 20%;
     border-radius: 50%;
     display: inline-block;
-    margin-top: -12%;
+    margin-top: -8%;
     margin-right: 2%;
 }
 .item-text {
+    font-family: "SA";
     display: inline-block;
     max-width: 60%;
+    margin-top: 1%;
+}
+.follow {
+    font-size: 80%;
+    font-weight: lighter;
 }
 .channel-name {
-    font-family: "Hugmate";
-    font-size: 90%;
+    font-size: 120%;
+    font-weight: large;
 }
 .go {
     width: 5%;
@@ -109,7 +127,8 @@ a {
     margin-top: -12%;
 }
 .go.loading {
-    width: 8%;
+    width: 10%;
+    margin-left: 2%;
     margin-left: -0.1px;
 }
 .price {

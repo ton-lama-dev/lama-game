@@ -1,6 +1,8 @@
 let tg = window.Telegram.WebApp;
 let user_tg_id = tg.initDataUnsafe.user.id;
 
+const homeUrl = "https://b042-217-25-86-16.ngrok-free.app/"
+
 const $lama = document.getElementById("lama");
 const $balance = document.getElementById("balance");
 const $tasks = document.getElementById("tasks");
@@ -27,7 +29,7 @@ function update() {
       "energy_available": availableEnergy,
     };
   
-    fetch('https://5994-217-25-86-44.ngrok-free.app/update', {
+    fetch(homeUrl + 'update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -99,15 +101,15 @@ $lama.addEventListener("touchstart", (event) => {
 });
 
 $tasks.addEventListener("click", function() {
-  window.location.href = `https://b042-217-25-86-16.ngrok-free.app/tasks?user_id=${user_tg_id}`;
+  window.location.href = homeUrl + `tasks?user_id=${user_tg_id}`;
 });
 
 $upgrade.addEventListener("click", function() {
-  window.location.href = `https://5994-217-25-86-44.ngrok-free.app/upgrade?user_id=${user_tg_id}`;
+  window.location.href = homeUrl + `upgrade?user_id=${user_tg_id}`;
 });
 
 $friends.addEventListener("click", function() {
-  window.location.href = `https://5994-217-25-86-44.ngrok-free.app/friends?user_id=${user_tg_id}`;
+  window.location.href = homeUrl + `friends?user_id=${user_tg_id}`;
 });
 
 
@@ -120,30 +122,30 @@ function refillProgressBar() {
 };
 
 
-function onBeforeUnload(event) {
-  const data = {
-    "user_id": user_tg_id,
-    "balance": $balance.textContent
-  };
+// function onBeforeUnload(event) {
+//   const data = {
+//     "user_id": user_tg_id,
+//     "balance": $balance.textContent
+//   };
 
-  fetch('https://78e7-217-25-86-62.ngrok-free.app/exit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(result => {
-    console.log('Response from server:', result);
-  })
-  .catch(error => {
-    console.error('Error sending data:', error);
-  });
-};
+//   fetch('https://78e7-217-25-86-62.ngrok-free.app/exit', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(data)
+//   })
+//   .then(response => response.json())
+//   .then(result => {
+//     console.log('Response from server:', result);
+//   })
+//   .catch(error => {
+//     console.error('Error sending data:', error);
+//   });
+// };
 
 
-// Add the event listener for beforeunload
-window.addEventListener('beforeunload', onBeforeUnload);
+
+// window.addEventListener('beforeunload', onBeforeUnload);
 setBar();
 refillProgressBar();

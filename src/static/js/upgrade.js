@@ -1,6 +1,8 @@
 let tg = window.Telegram.WebApp;
 let user_tg_id = tg.initDataUnsafe.user.id;
 
+const homeUrl = "https://b042-217-25-86-16.ngrok-free.app/"
+
 let $tapUpgradeButton = document.getElementById("tap-upgrade-btn");
 let $energyUpgradeButton = document.getElementById("energy-upgrade-btn");
 let $refillUpgradeButton = document.getElementById("refill-upgrade-btn");
@@ -9,7 +11,7 @@ tg.BackButton.show()
 
 tg.onEvent('backButtonClicked', backCallback)
 function backCallback() {
-    window.location.href = `https://5994-217-25-86-44.ngrok-free.app/main?user_id=${user_tg_id}`;
+    window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
 };
 
 
@@ -17,7 +19,7 @@ $tapUpgradeButton.addEventListener("click", () => {
     const data = {
         "user_id": user_tg_id,
     };
-    fetch(`https://5994-217-25-86-44.ngrok-free.app/upgrade_tap`, {
+    fetch(homeUrl + `upgrade_tap`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -30,7 +32,7 @@ $energyUpgradeButton.addEventListener("click", () => {
     const data = {
         "user_id": user_tg_id,
     };
-    fetch(`https://5994-217-25-86-44.ngrok-free.app/upgrade_energy`, {
+    fetch(homeUrl + `upgrade_energy`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -43,7 +45,7 @@ $refillUpgradeButton.addEventListener("click", () => {
     const data = {
         "user_id": user_tg_id,
     };
-    fetch(`https://5994-217-25-86-44.ngrok-free.app/upgrade_refill`, {
+    fetch(homeUrl + `upgrade_refill`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

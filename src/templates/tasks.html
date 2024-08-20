@@ -23,7 +23,21 @@
             {% if data != None %}
                 {% for key, value in data.items() %}
                     <a href="#" class="item-link">
-                        <div class='item' id="{{ value['task_id'] }}">
+                        {% if value['is_done'] %}
+                        <div class="item done" id="{{ value['task_id'] }}">
+                            <img class="item-img" src='{{ value["img_link"] }}' alt="">
+                            <div class="item-text">
+                                <p class="follow">{{ value["description"] }}</p>
+                                <p class="channel-name">{{ value["name"] }}</p>
+                                <div class="price">
+                                    <img src="../static/img/token.png" alt="" class="price-img">
+                                    <span>{{ value["reward"] }}</span>
+                                </div>
+                            </div>
+                            <img src="../static/img/done.png" alt="" class="go">
+                        </div>
+                        {% else %}
+                        <div class="item active" id="{{ value['task_id'] }}">
                             <img class="item-img" src='{{ value["img_link"] }}' alt="">
                             <div class="item-text">
                                 <p class="follow">{{ value["description"] }}</p>
@@ -35,6 +49,7 @@
                             </div>
                             <img src="../static/img/go.png" alt="" class="go">
                         </div>
+                        {% endif %}
                     </a>
                 {% endfor %}
             {% endif %}

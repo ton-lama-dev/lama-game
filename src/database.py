@@ -18,7 +18,7 @@ def init_db():
                        referrer_id INTEGER,
                        revenue_percent INTEGER DEFAULT 20,
                        reg_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-                       done_tasks TEXT DEFAULT '',
+                       done_tasks TEXT DEFAULT '1',
                        streak INTEGER DEFAULT 0,
                        last_claim DATETIME DEFAULT '2000-01-01 00:00:00',
                        last_login DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -59,6 +59,37 @@ def login_user(user_id):
     with connect_db() as conn:
         cursor = conn.cursor()
         cursor.execute("UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE tg_id = ?", (user_id, ))
+        conn.commit()
+
+
+def task_is_done(task_id: int, user_id: int):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT done_tasks FROM users WHERE tg_id = ?", (user_id, ))
+        string = cursor.fetchone()[0]
+        if string:
+            done_tasks = [int(num) for num in string.split(',')]
+            return task_id in done_tasks
+
+
+def subscribe_user(task_id: int, user_id: int):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT done_tasks FROM users WHERE tg_id = ?", (user_id, ))
+        done_tasks_old = cursor.fetchone()[0]
+
+        done_tasks_new = done_tasks_old + "," + str(task_id)
+        cursor.execute("UPDATE users SET done_tasks = ? WHERE tg_id = ?", (done_tasks_new, user_id))
+        conn.commit()
+
+
+def reward_user(user_id: int, num: int) -> None:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT balance FROM users WHERE tg_id = ?", (user_id, ))
+        current_balance = int(cursor.fetchone()[0])
+        new_balance = current_balance + num
+        cursor.execute("UPDATE users SET balance = ? WHERE tg_id = ?", (new_balance, user_id))
         conn.commit()
 
 

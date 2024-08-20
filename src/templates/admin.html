@@ -50,7 +50,7 @@
         <h1>Tasks list</h1>
         {% if data != None %}
             {% for key, value in data.items() %}
-                <p>id: {{ task["id"] }} name: {{ task["name"] }} link: {{ task["link"] }} done: {{ task["done_times"] }}</p>
+                <p>id: {{ value["task_id"] }} name: {{ value["name"] }} link: {{ value["link"] }} done: {{ value["times_done"] }}</p>
             {% endfor %}
         {% endif %}
     </div>

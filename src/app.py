@@ -74,32 +74,57 @@ async def daily():
 async def tasks():
     user_id = int(request.args.get("user_id"))
     tasks_ids = db.get_tasks_ids(user_id=user_id)
-    data = get_tasks_data(tasks_ids=tasks_ids)
+    data = get_tasks_data(tasks_ids=tasks_ids, user_id=user_id)
     return await render_template("tasks.html", data=data)
 
-def get_tasks_data(tasks_ids: list):
+def get_tasks_data(tasks_ids: list, user_id=0):
     data = dict()
-    for id in tasks_ids:
-        description = db.tasks_get(item="description", task_id=id)
-        name = db.tasks_get(item="name", task_id=id)
-        reward = int(db.tasks_get(item="reward", task_id=id))
-        link = db.tasks_get(item="link", task_id=id)
-        img_link = db.tasks_get(item="img_link", task_id=id)
-        task_id = int(db.tasks_get(item="id", task_id=id))
-        public_link = db.tasks_get(item="public_link", task_id=id)
-        times_done = int(db.tasks_get(item="times_done", task_id=id))
-        needs_checking = db.tasks_get(item="needs_checking", task_id=id)
-        is_active = db.tasks_get(item="is_active", task_id=id)
-        data[id] = {"description": description,
-                    "name": name,
-                    "reward": reward,
-                    "link": link,
-                    "img_link": img_link,
-                    "task_id": task_id,
-                    "public_link": public_link,
-                    "times_done": times_done,
-                    "needs_checking": needs_checking,
-                    "is_active": is_active}
+    if not user_id == 0:
+        for id in tasks_ids:
+            description = db.tasks_get(item="description", task_id=id)
+            name = db.tasks_get(item="name", task_id=id)
+            reward = int(db.tasks_get(item="reward", task_id=id))
+            link = db.tasks_get(item="link", task_id=id)
+            img_link = db.tasks_get(item="img_link", task_id=id)
+            task_id = int(db.tasks_get(item="id", task_id=id))
+            public_link = db.tasks_get(item="public_link", task_id=id)
+            times_done = int(db.tasks_get(item="times_done", task_id=id))
+            needs_checking = db.tasks_get(item="needs_checking", task_id=id)
+            is_active = db.tasks_get(item="is_active", task_id=id)
+            is_done = db.task_is_done(task_id=id, user_id=user_id)
+            data[id] = {"description": description,
+                        "name": name,
+                        "reward": reward,
+                        "link": link,
+                        "img_link": img_link,
+                        "task_id": task_id,
+                        "public_link": public_link,
+                        "times_done": times_done,
+                        "needs_checking": needs_checking,
+                        "is_active": is_active,
+                        "is_done": is_done}
+    else:
+        for id in tasks_ids:
+            description = db.tasks_get(item="description", task_id=id)
+            name = db.tasks_get(item="name", task_id=id)
+            reward = int(db.tasks_get(item="reward", task_id=id))
+            link = db.tasks_get(item="link", task_id=id)
+            img_link = db.tasks_get(item="img_link", task_id=id)
+            task_id = int(db.tasks_get(item="id", task_id=id))
+            public_link = db.tasks_get(item="public_link", task_id=id)
+            times_done = int(db.tasks_get(item="times_done", task_id=id))
+            needs_checking = db.tasks_get(item="needs_checking", task_id=id)
+            is_active = db.tasks_get(item="is_active", task_id=id)
+            data[id] = {"description": description,
+                        "name": name,
+                        "reward": reward,
+                        "link": link,
+                        "img_link": img_link,
+                        "task_id": task_id,
+                        "public_link": public_link,
+                        "times_done": times_done,
+                        "needs_checking": needs_checking,
+                        "is_active": is_active}
 
     return data
 
@@ -116,6 +141,9 @@ async def check_subscription():
         member_status = await bot.get_chat_member(chat_id=public_link, user_id=user_id)
         print(member_status.status)
         if member_status.status in ['member', 'administrator', 'creator']:
+            db.subscribe_user(task_id=task_id, user_id=user_id)
+            reward = int(db.tasks_get(item="reward", task_id=task_id))
+            db.reward_user(user_id=user_id, num=reward)
             return jsonify({"subscribed": True}), 200
         else:
             return jsonify({"subscribed": False}), 410
@@ -161,20 +189,23 @@ async def upgrade_refill():
 
 @app.route("/add_task", methods=["POST"])
 async def add_task():
-    password = request.form.get("password")
-    description = request.form.get('description')
-    name = request.form.get('name')
-    reward = int(request.form.get('reward'))
-    public_link = request.form.get('public_link')
-    link = request.form.get('link')
-    img_link = request.form.get('img_link')
-    needs_checking = int('needs_checking' in request.form)
+    form_data = await request.form
+    password = form_data.get("password")
+    description = form_data.get('description')
+    name = form_data.get('name')
+    reward = int(form_data.get('reward'))
+    public_link = form_data.get('public_link')
+    link = form_data.get('link')
+    img_link = form_data.get('img_link')
+    needs_checking = int('needs_checking' in form_data)
     id = randint(111111, 999999)
+
     if password == cf.ADMIN_PASS:
         db.add_task(id=id, description=description, name=name, reward=reward, public_link=public_link,
                     link=link, img_link=img_link, needs_checking=needs_checking)
         return "<h1>task added successfully</h1>"
     return "<h1>error</h1>"
+
 
 if __name__ == "__main__":
     db.init_db()
