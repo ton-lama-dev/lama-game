@@ -78,8 +78,14 @@ def subscribe_user(task_id: int, user_id: int):
         cursor.execute("SELECT done_tasks FROM users WHERE tg_id = ?", (user_id, ))
         done_tasks_old = cursor.fetchone()[0]
 
+        cursor.execute("SELECT times_done FROM tasks WHERE id = ?", (task_id, ))
+        times_done_old = cursor.fetchone()[0]
+        times_done_new = times_done_old + 1
+        cursor.execute("UPDATE tasks SET times_done = ? WHERE id = ?", (times_done_new, task_id))
+
         done_tasks_new = done_tasks_old + "," + str(task_id)
         cursor.execute("UPDATE users SET done_tasks = ? WHERE tg_id = ?", (done_tasks_new, user_id))
+
         conn.commit()
 
 

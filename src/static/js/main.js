@@ -1,7 +1,7 @@
 let tg = window.Telegram.WebApp;
 let user_tg_id = tg.initDataUnsafe.user.id;
 
-const homeUrl = "https://b042-217-25-86-16.ngrok-free.app/"
+const homeUrl = "https://c5f1-217-25-86-16.ngrok-free.app/"
 
 const $lama = document.getElementById("lama");
 const $balance = document.getElementById("balance");

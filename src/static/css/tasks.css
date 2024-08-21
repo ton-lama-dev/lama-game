@@ -81,6 +81,7 @@ body {
 
 a {
     color: black;
+    display: block;
 }
 
 .item {

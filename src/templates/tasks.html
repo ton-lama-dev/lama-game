@@ -22,7 +22,7 @@
         <div class="tasks-list">
             {% if data != None %}
                 {% for key, value in data.items() %}
-                    <a href="#" class="item-link">
+                    <a href="{{ value['link'] }}" class="item-link">
                         {% if value['is_done'] %}
                         <div class="item done" id="{{ value['task_id'] }}">
                             <img class="item-img" src='{{ value["img_link"] }}' alt="">

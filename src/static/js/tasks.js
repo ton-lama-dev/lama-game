@@ -2,14 +2,14 @@
 // let user_tg_id = tg.initDataUnsafe.user.id;
 let user_tg_id = 6257396100;
 
-const homeUrl = "https://b042-217-25-86-16.ngrok-free.app/"
+const homeUrl = "https://c5f1-217-25-86-16.ngrok-free.app/"
 
-tg.BackButton.show();
+// tg.BackButton.show();
 
-tg.onEvent('backButtonClicked', backCallback);
-function backCallback() {
-    window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
-}
+// tg.onEvent('backButtonClicked', backCallback);
+// function backCallback() {
+//     window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
+// }
 
 document.getElementById("daily-btn").onclick = function() {
     window.location.href = homeUrl + `daily?user_id=${user_tg_id}`;
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     items.forEach(item => {
         item.addEventListener('click', function(event) {
-            event.preventDefault();
+            // event.preventDefault();
 
             if (item.classList.contains("done")) {
                 return;
