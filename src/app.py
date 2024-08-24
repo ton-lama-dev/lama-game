@@ -74,7 +74,28 @@ async def upgrade():
 
 @app.route("/daily")
 async def daily():
-    return await render_template("daily.html")
+    user_id = int(request.args.get("user_id"))
+    streak = int(db.get(item="streak", user_id=user_id))
+    last_claim_and_today_difference = db.get_last_claim_and_today_difference(user_id=user_id)
+
+    days = dict()
+    for i in range(1, 13):
+        days[i] = dict()
+        if i == streak:
+            if last_claim_and_today_difference >= 1:
+                days[i]["status"] = "active"
+            else:
+                days[i]["status"] = "passive"
+        elif i < streak:
+            days[i]["status"] = "passive"
+        else:
+            days[i]["status"] = "default"
+        days[i]["reward"] = cf.DAILY_REWARDS[i - 1]
+    print(days)
+
+    button_status = "enabled" if last_claim_and_today_difference != 0 else "disabled"
+
+    return await render_template("daily.html", days=days, button_status=button_status)
 
 
 @app.route("/tasks")

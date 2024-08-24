@@ -19,7 +19,7 @@ def init_db():
                        revenue_percent INTEGER DEFAULT 20,
                        reg_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                        done_tasks TEXT DEFAULT '1',
-                       streak INTEGER DEFAULT 0,
+                       streak INTEGER DEFAULT 1,
                        last_claim DATETIME DEFAULT '2000-01-01 00:00:00',
                        last_login DATETIME DEFAULT CURRENT_TIMESTAMP,
                        tap_level INTEGER DEFAULT 1,
@@ -148,6 +148,14 @@ def upgrade_refill(user_id: int) -> bool:
         cursor.execute("UPDATE users SET balance = ? WHERE tg_id = ?", (balance - upgrade_price, user_id))
         conn.commit()
         return True
+
+
+def get_last_claim_and_today_difference(user_id: int) -> int:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT JULIANDAY('now') - JULIANDAY(last_claim) AS days_difference FROM users WHERE tg_id = ?", (user_id, ))
+        result = int(cursor.fetchone()[0])
+        return result
 
 
 def get_friends_ids(user_id: int) -> list[int]:

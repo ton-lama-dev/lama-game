@@ -11,4 +11,4 @@ const startAppNumber = searchParams.get('tgWebAppStartParam');
 const userName = tg.initDataUnsafe.user.first_name;
 
 
-window.location.href = `https://c5f1-217-25-86-16.ngrok-free.app/main?user_id=${user_tg_id}&referrer_id=${startAppNumber}&name=${userName}`;
+window.location.href = `https://9113-217-25-86-16.ngrok-free.app/main?user_id=${user_tg_id}&referrer_id=${startAppNumber}&name=${userName}`;

@@ -23,95 +23,20 @@
         </div>
 
         <div class="list-container">
-            <div class="wrap">
-                <div class="day left">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
+            {% for key, value in days.items() %}
+                <div class="wrap {{ value['status'] }}">
+                    <div class="day left {{ value['status'] }}">
+                        <p class="day-text">Day {{ key }}</p>
+                        <img src="../static/img/token.png" alt="" class="day-img">
+                        <p class="reward">{{ value['reward'] }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="wrap">
-                <div class="day">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day right">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day left">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day right">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day left">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
-            <div class="wrap">
-                <div class="day right">
-                    <p class="day-text">Day 1</p>
-                    <img src="../static/img/token.png" alt="" class="day-img">
-                    <p class="reward">100</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <div class="btn-wrap">
             <div class="btn-border">
-                <button class="claim">CLAIM</button>
+                <button class="claim {{ button_status }}">CLAIM</button>
             </div>
         </div>
     
