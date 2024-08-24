@@ -97,6 +97,23 @@ async def daily():
 
     return await render_template("daily.html", days=days, button_status=button_status)
 
+@app.route('/claim', methods=['POST'])
+async def claim():
+    data = await request.json
+    user_id = int(data.get('user_id'))
+
+    streak = int(db.get(item="streak", user_id=user_id))
+    new_streak = streak + 1
+    db.set(item="streak", value=new_streak, user_id=user_id)
+
+    balance = int(db.get(item="balance", user_id=user_id))
+    new_balance = balance + cf.DAILY_REWARDS[streak - 1]
+    db.set(item="balance", value=new_balance, user_id=user_id)
+
+    db.set(item="last_claim", value="CURRENT_TIMESTAMP", user_id=user_id)
+
+    return "200"
+
 
 @app.route("/tasks")
 async def tasks():
@@ -252,4 +269,9 @@ async def add_task():
 
 if __name__ == "__main__":
     db.init_db()
-    app.run(debug=True)
+    while True:
+        try:
+            app.run(debug=True)
+        except Exception as e:
+            print("Exception it the main loop:")
+            print(e)

@@ -89,7 +89,7 @@ body {
 }
 .wrap.active {
     border: 2px dashed #53D8FB;
-    animation: borderAnimation 4s linear infinite;
+    animation: borderAnimation;
     position: relative;
 }
 .wrap.passive {
