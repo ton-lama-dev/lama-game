@@ -1,0 +1,114 @@
+@import url("reset.css");
+
+
+body {
+    background-image: url("../img/swap-bg.jpg");
+    height: 100vh;
+}
+
+.header {
+    padding-top: 10%;
+    font-family: "Inria Sans";
+    text-align: center;
+}
+
+.header h2 {
+    font-weight: 400;
+}
+
+.header h1 {
+    font-weight: 900;
+    font-size: 330%;
+}
+
+.items {
+    margin-top: 25%;
+}
+
+.item {
+    background-color: rgba(255, 255, 255, 0.75);
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    font-family: "Inria Sans";
+    margin-top: 4%;
+    padding: 2% 4% 10% 4%;
+}
+
+.item.two {
+    padding-bottom: 6%;
+}
+
+.arrows {
+    width: 10%;
+    display: block;
+    position: absolute;
+    z-index: 2;
+    margin-top: -3%;
+    left: 80%;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+}
+
+.you {
+    font-weight: 300;
+}
+
+.number, .token span {
+    font-weight: 900;
+    font-size: 120%;
+}
+
+.token {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ratio {
+    margin-top: 12%;
+    opacity: 0.4;
+}
+
+.explanation {
+    width: 95%;
+    font-family: "Inria Sans";
+    text-align: center;
+    margin-top: -10%;
+    font-weight: 300;
+    opacity: 0.35;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.explanation p {
+    text-align: center;
+}
+
+.btn-wrap {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 15%;
+    position: relative;
+    top: 17%;
+}
+
+.swap-btn {
+    width: 95%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 130%;
+    font-family: "Inria Sans";
+}
+
