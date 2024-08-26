@@ -1,5 +1,6 @@
 @import url(reset.css);
 
+
 @font-face {
     font-family: "Hugmate";
     src: url("../font/hugmate.woff2");
@@ -10,7 +11,14 @@
     src: url("../font/halogen.woff2");
 }
 
-
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent; 
+}
 
 body {
     background-color: white;

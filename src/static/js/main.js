@@ -10,10 +10,11 @@ const $upgrade = document.getElementById("upgrade");
 const $friends = document.getElementById("friends");
 const $progressBar = document.getElementById("progress-bar");
 const $progressText = document.getElementById("progress-text");
+const $tap = document.getElementById("tap-power");
 
 let availableEnergy = Number($progressText.textContent.split("/")[0]);
 let maxEnergy = Number($progressText.textContent.split("/")[1]);
-let tap = 1;
+let tap_power = Number($tap.textContent);
 let refillSpeed = 1;  // per second
 
 tg.BackButton.show();
@@ -51,7 +52,11 @@ function increaseBalance(num) {
 };
 
 function refillBar(speed) {
-  availableEnergy += speed * 10; // because i call this function each 10s
+  if (maxEnergy - availableEnergy >= tap_power){
+    availableEnergy += speed * 10; // because i call this function each 10s
+  } else {
+    availableEnergy += maxEnergy - availableEnergy;
+  }
 
   newWidth = availableEnergy / maxEnergy * 100;
   $progressBar.style.width = `${newWidth}%`;
@@ -67,7 +72,7 @@ function setBar() {
 $lama.addEventListener("touchstart", (event) => {
   const rect = $lama.getBoundingClientRect();
   for (let i = 0; i < event.touches.length; i++) {
-    if (tap <= availableEnergy) {
+    if (tap_power <= availableEnergy) {
       const touch = event.touches[i];
       const offsetX = touch.clientX - rect.left - rect.width / 2;
       const offsetY = touch.clientY - rect.top - rect.height / 2;
@@ -85,12 +90,11 @@ $lama.addEventListener("touchstart", (event) => {
 
       const plusOne = document.createElement("div");
       plusOne.classList.add("plus-one");
-      // plusOne.textContent = `+${tap}`; // temporarily commented for the alpha-version
-      plusOne.textContent = `test`;
+      plusOne.textContent = `+${tap_power}`;
       plusOne.style.left = `${touch.clientX - rect.left + 30}px`;
       plusOne.style.top = `${touch.clientY - rect.top + 200}px`;
       $lama.parentElement.appendChild(plusOne);
-      increaseBalance(tap);
+      increaseBalance(tap_power);
       setTimeout(() => {
         plusOne.remove();
       }, 2000);

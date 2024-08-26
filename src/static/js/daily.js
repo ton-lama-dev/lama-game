@@ -1,12 +1,10 @@
-let user_tg_id = 6257396100;
-
 const homeUrl = "https://9113-217-25-86-16.ngrok-free.app/"
 
 const $claim_button = document.getElementById("claim-btn");
 
-// tg.BackButton.show()
+tg.BackButton.show()
 
-// tg.onEvent('backButtonClicked', backCallback)
+tg.onEvent('backButtonClicked', backCallback)
 function backCallback() {
     window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
 }
@@ -24,9 +22,8 @@ document.getElementById("tasks-btn").onclick = function() {
 };
 
 $claim_button.onclick = function() {
-    // Check if the button has the class "disabled"
     if ($claim_button.classList.contains("disabled")) {
-        return;  // Exit the function if the button is disabled
+        return;
     }
 
     let url = homeUrl + "claim";

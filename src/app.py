@@ -29,12 +29,12 @@ async def master():
     energy_available = db.get("energy_available", user_id=user_id) + get_refilled_energy(user_id=user_id)
     energy_level = db.get(item="energy_level", user_id=user_id)
     energy_max = energy_level * cf.ENERGY_LEVELS[energy_level - 1]
+    tap_power = cf.TAP_LEVELS[int(db.get(item="tap_level", user_id=user_id)) - 1]
     if energy_available >= energy_max:
         energy_available = energy_max
     balance = db.get("balance", user_id=user_id)
     db.login_user(user_id=user_id)
-    return await render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance)
-
+    return await render_template("main.html", energy_available=energy_available, energy_max=energy_max, balance=balance, tap_power=tap_power)
 
 def get_refilled_energy(user_id: int) -> int:
     current_time = datetime.utcnow().replace(microsecond=0)

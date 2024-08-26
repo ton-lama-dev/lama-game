@@ -14,6 +14,13 @@ function backCallback() {
     window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
 };
 
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+};
 
 $tapUpgradeButton.addEventListener("click", () => {
     const data = {
@@ -26,6 +33,7 @@ $tapUpgradeButton.addEventListener("click", () => {
         },
         body: JSON.stringify(data)
     });
+    wait(500);
     window.location.reload();
 });
 $energyUpgradeButton.addEventListener("click", () => {
@@ -39,6 +47,7 @@ $energyUpgradeButton.addEventListener("click", () => {
         },
         body: JSON.stringify(data)
     });
+    wait(500);
     window.location.reload();
 });
 $refillUpgradeButton.addEventListener("click", () => {
@@ -52,6 +61,7 @@ $refillUpgradeButton.addEventListener("click", () => {
         },
         body: JSON.stringify(data)
     });
+    wait(500);
     window.location.reload();
 });
 

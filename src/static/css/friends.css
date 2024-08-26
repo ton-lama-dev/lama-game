@@ -16,6 +16,7 @@ body {
     background: linear-gradient(#e8e8e8, #ffffff);
     overflow-x: hidden;
     position: absolute;
+    width: 100%;
 }
 
 h1 {
@@ -51,11 +52,13 @@ h3 {
     margin-top: 2%;
     background: linear-gradient(#FED9FF, #F4BCFF);
     border-top-left-radius: 8%;
+    width: 100%;
 }
 
 .nickname {
     width: 15%;
     border-radius: 35%;
+    font-family: "Halogen";
 }
 
 .token {
