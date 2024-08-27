@@ -111,6 +111,8 @@ async def claim():
     db.set(item="balance", value=new_balance, user_id=user_id)
 
     db.set(item="last_claim", value="CURRENT_TIMESTAMP", user_id=user_id)
+    if streak >= 12:
+        db.set(item="streak", value=1, user_id=user_id)
 
     return "200"
 
