@@ -15,7 +15,7 @@ body {
     height: 100%; */
     background: linear-gradient(#e8e8e8, #ffffff);
     overflow-x: hidden;
-    position: absolute;
+    position: relative;
     width: 100%;
 }
 
@@ -28,7 +28,7 @@ h1 {
     padding-top: 20%;
 }
 
-p {
+.desc {
     padding-left: 7%;
     padding-right: 7%;
     font-family: "Halogen";
@@ -106,4 +106,107 @@ h3 {
 .num {
     margin-top: 8%;
     margin-right: -10%;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s;
+}
+
+.popup {
+    position: fixed;
+    padding-bottom: 10%;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+    transition: bottom 0.3s;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+
+.popup.ref-link {
+    font-weight: 100;
+    font-style: normal;
+    font-size: smaller;
+    margin-bottom: 12%;
+}
+.popup button {
+    font-family: "Hugmate";
+    text-transform: capitalize;
+    font-size: 1.3rem;
+    background-color: #F7C6FF;
+    padding: 15px 30px;
+    border-radius: 20px;
+}
+.popup-content {
+    padding: 1%;
+    text-align: center;
+    align-items: center;
+}
+
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popup.active {
+    bottom: 0;
+}
+
+.top-rect {
+    background-color: #B9B9B9;
+    width: 10%;
+    height: 10%;
+}
+
+.rect {
+    width: 20%;
+}
+
+.invite-btn {
+    display: block;
+    position: fixed;
+    background-color: rgb(77, 215, 219);
+    font-family: "Hugmate";
+    padding: 2% 3%;
+    border-radius: 20px;
+    font-size: 130%;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: none;
+}
+
+.popup-img {
+    width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3%;
+}
+
+.popup-header {
+    font-size: 170%;
+    margin-bottom: 7%;
+    font-family: "Hugmate";
+}
+
+.popup-desc, .ref-link {
+    font-family: "Halogen";
+}
+
+.ref-link {
+    margin-bottom: 10%;
 }

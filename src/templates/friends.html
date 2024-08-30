@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>1 friend</h1>
-    <p>Every time your fried claims LAMA you get 20% cashback</p>
+    <p class="desc">Every time your fried claims LAMA you get 20% cashback</p>
     <h3>my friends</h3>
     <div class="list">
         {% for key, value in data.items() %}
@@ -24,26 +24,22 @@
             </div>
         </div>
         {% endfor %}
-        <!-- <div class="item">
-            <div class="referral">
-                <img src="../static/img/anon.png" alt="" class="userpic">
-                <span class="nickName">nick_name</span>
-            </div>
-            <div class="sum">
-                <span class="num">0.83</span>
-                <img src="../static/img/token.png" alt="" class="token">
-            </div>
+    </div>
+
+    <!-- <div class="btn-wrap"> -->
+        <button id="invite-btn" class="invite-btn">INVITE FRIEND</button>
+    <!-- </div> -->
+
+    <div id="overlay" class="overlay"></div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <img class="rect" src="../static/img/rect.png" alt="">
+            <img class="popup-img" src="../static/img/hands.jpg" alt="">
+            <p class="popup-header">FRIENDSHIP BONUS</p>
+            <p class="popup-desc">Your referral link:</p>
+            <p class="ref-link" id="ref-link"></p>
+            <button id="copy-btn" class="popup-btn">COPY LINK</button>
         </div>
-        <div class="item">
-            <div class="referral">
-                <img src="../static/img/anon.png" alt="" class="userpic">
-                <span class="nickName">nick_name</span>
-            </div>
-            <div class="sum">
-                <span class="num">0.83</span>
-                <img src="../static/img/token.png" alt="" class="token">
-            </div>
-        </div> -->
     </div>
 
     <script src="../static/js/friends.js"></script>
