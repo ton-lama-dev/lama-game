@@ -126,30 +126,5 @@ function refillProgressBar() {
 };
 
 
-// function onBeforeUnload(event) {
-//   const data = {
-//     "user_id": user_tg_id,
-//     "balance": $balance.textContent
-//   };
-
-//   fetch('https://78e7-217-25-86-62.ngrok-free.app/exit', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data)
-//   })
-//   .then(response => response.json())
-//   .then(result => {
-//     console.log('Response from server:', result);
-//   })
-//   .catch(error => {
-//     console.error('Error sending data:', error);
-//   });
-// };
-
-
-
-// window.addEventListener('beforeunload', onBeforeUnload);
 setBar();
 refillProgressBar();
