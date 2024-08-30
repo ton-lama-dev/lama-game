@@ -89,8 +89,6 @@ body {
 }
 .wrap.active {
     border: 2px dashed #53D8FB;
-    animation: borderAnimation;
-    position: relative;
 }
 .wrap.passive {
     opacity: 0.5;
@@ -142,22 +140,4 @@ body {
 .claim:active {
     transform: translateY(5px);
     box-shadow: 0 2px 0 #ccc, 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-@keyframes borderAnimation {
-    0% {
-      background-position: left top, right top, right bottom, left bottom;
-    }
-    25% {
-      background-position: right top, right top, right bottom, right bottom;
-    }
-    50% {
-      background-position: right bottom, right bottom, left bottom, left bottom;
-    }
-    75% {
-      background-position: left bottom, left bottom, left top, left top;
-    }
-    100% {
-      background-position: left top, right top, right bottom, left bottom;
-    }
 }

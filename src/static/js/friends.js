@@ -1,15 +1,14 @@
-// let tg = window.Telegram.WebApp;
-// let user_tg_id = tg.initDataUnsafe.user.id;
-user_tg_id = 6257396100;
+let tg = window.Telegram.WebApp;
+let user_tg_id = tg.initDataUnsafe.user.id;
 
-const homeUrl = "https://9113-217-25-86-16.ngrok-free.app/"
+const homeUrl = "https://fb92-217-25-86-81.ngrok-free.app/"
 
-// tg.BackButton.show()
+tg.BackButton.show()
 
-// tg.onEvent('backButtonClicked', backCallback)
-// function backCallback() {
-//     window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
-// };
+tg.onEvent('backButtonClicked', backCallback)
+function backCallback() {
+    window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     const $refLink = document.getElementById("ref-link");

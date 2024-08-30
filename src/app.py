@@ -82,8 +82,14 @@ async def daily():
     for i in range(1, 13):
         days[i] = dict()
         if i == streak:
-            if last_claim_and_today_difference >= 1:
+            if streak == 1:
                 days[i]["status"] = "active"
+                days[i]["reward"] = cf.DAILY_REWARDS[i - 1]
+                continue
+            if last_claim_and_today_difference == 1:
+                days[i]["status"] = "active"
+            if last_claim_and_today_difference < 1:
+                days[i]["status"] = "default"
             else:
                 days[i]["status"] = "passive"
         elif i < streak:
@@ -91,9 +97,9 @@ async def daily():
         else:
             days[i]["status"] = "default"
         days[i]["reward"] = cf.DAILY_REWARDS[i - 1]
-    print(days)
+        print(days[i]["reward"])
 
-    button_status = "enabled" if last_claim_and_today_difference != 0 else "disabled"
+    button_status = "enabled" if last_claim_and_today_difference == 1 or streak == 1 else "disabled"
 
     return await render_template("daily.html", days=days, button_status=button_status)
 
@@ -222,7 +228,6 @@ async def check_subscription():
     if not user_id:
         return jsonify({"error": "user_id is required"}), 400
     if not needs_checking:
-        print("not checked")
         finish_task(user_id=user_id, task_id=task_id)
         return jsonify({"subscribed": True}), 200
 
