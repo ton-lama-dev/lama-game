@@ -6,6 +6,9 @@ import config as cf
 def connect_db():
     return sqlite3.connect("data.db")
 
+def connect_bot_db():
+    return sqlite3.connect("bot.db")
+
 
 def init_db():
     with connect_db() as conn:
@@ -192,6 +195,20 @@ def get_channel_public_link(task_id: int) -> str:
         cursor = conn.cursor()
         cursor.execute(f"SELECT public_link FROM tasks WHERE id = ?", (task_id, ))
         return cursor.fetchone()[0]
+
+
+def bot_get(item: str, user_id: int) -> any:
+    with connect_bot_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT {item} FROM rewards WHERE id = ?", (user_id, ))
+        result = cursor.fetchone()
+        return result[0] if result else None
+    
+def bot_set(item: str, value: any, user_id: int):
+    with connect_bot_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE rewards SET {item} = {value} WHERE id = ?", (user_id, ))
+        conn.commit()
 
 
 def get(item: str, user_id: int):

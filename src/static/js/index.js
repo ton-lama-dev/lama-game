@@ -1,6 +1,8 @@
 let tg = window.Telegram.WebApp;
 let user_tg_id = tg.initDataUnsafe.user.id;
 
+const homeUrl = "https://fb92-217-25-86-81.ngrok-free.app/"
+
 const currentUrl = window.location.href;
 
 // getting startapp num (referrer id)
@@ -10,5 +12,9 @@ const startAppNumber = searchParams.get('tgWebAppStartParam');
 
 const userName = tg.initDataUnsafe.user.first_name;
 
+if (startAppNumber === "swap"){
+    window.location.href = `${homeUrl}/swap?user_id=${user_tg_id}`;
+} else {
+    window.location.href = `${homeUrl}/main?user_id=${user_tg_id}&referrer_id=${startAppNumber}&name=${userName}`;
+}
 
-window.location.href = `https://9113-217-25-86-16.ngrok-free.app/main?user_id=${user_tg_id}&referrer_id=${startAppNumber}&name=${userName}`;

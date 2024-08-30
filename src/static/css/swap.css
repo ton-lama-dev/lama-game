@@ -3,7 +3,7 @@
 
 body {
     background-image: url("../img/swap-bg.jpg");
-    height: 100vh;
+    height: 100%;
 }
 
 .header {
@@ -66,8 +66,14 @@ body {
 
 .token {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
+    gap: 5%;
+    font-size: 120%;
+}
+
+.token img {
+    width: 15%;
 }
 
 .ratio {
@@ -110,5 +116,9 @@ body {
     font-weight: 900;
     font-size: 130%;
     font-family: "Inria Sans";
+}
+
+.swap-btn.passive {
+    opacity: 0.5;
 }
 

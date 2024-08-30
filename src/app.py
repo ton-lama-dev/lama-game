@@ -177,6 +177,42 @@ def get_tasks_data(tasks_ids: list, user_id=0):
     return data
 
 
+@app.route("/pre-swap")
+async def pre_swap():
+    return await render_template("pre-swap.html")
+
+
+@app.route("/swap")
+async def swap():
+    user_id = int(request.args.get("user_id"))
+    
+    if db.is_new(user_id):
+        db.register_user(user_id=user_id, name="name")
+    
+    claimed = int(db.bot_get(item="claimed", user_id=user_id))
+    bot_balance = int(db.bot_get(item="balance", user_id=user_id))
+    reward = int(db.bot_get(item="balance", user_id=user_id) / 100)
+    if not claimed:
+        return await render_template("swap.html", bot_balance=bot_balance, reward=reward, button_status="active"), 200
+    else:
+        return await render_template("swap.html", button_status="passive", bot_balance=bot_balance, reward=reward), 200
+
+@app.route('/reward', methods=['POST'])
+async def reward():
+    data = await request.json
+    user_id = int(data.get('user_id'))
+    claimed = int(db.bot_get(item="claimed", user_id=user_id))
+    if not claimed:
+        balance = int(db.get(item="balance", user_id=user_id))
+        reward = int(db.bot_get(item="balance", user_id=user_id) / 100)
+        new_balance = balance + reward
+        db.set(item="balance", value=new_balance, user_id=user_id)
+        db.bot_set(item="claimed", value=1, user_id=user_id)
+        return "success", 200
+    else:
+        return "error", 400
+
+
 @app.route('/check_subscription', methods=['POST'])
 async def check_subscription():
     data = await request.json

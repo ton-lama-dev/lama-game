@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -18,8 +19,9 @@
         <div class="item one">
             <p class="you">You send</p>
             <div class="info">
-                <span class="number">98564232</span>
+                <span class="number">{{ bot_balance }}</span>
                 <div class="token">
+                    <img src="../static/img/b-lama.png" alt="">
                     <span class="name">B-Lama</span>
                 </div>
             </div>
@@ -28,19 +30,22 @@
         <div class="item two">
             <p class="you">You receive</p>
             <div class="info">
-                <span class="number">98564232</span>
+                <span class="number">{{ reward }}</span>
                 <div class="token">
+                    <img src="../static/img/g-lama.png" alt="">
                     <span class="name">G-Lama</span>
                 </div>
             </div>
-            <p class="ratio">1 B-Lama ≈ 0.009 G-Lama</p>
+            <p class="ratio">1 B-Lama ≈ 0.01 G-Lama</p>
         </div>
     </div>
     <div class="btn-wrap">
-        <button class="swap-btn">SWAP NOW</button>
+        <button id="claim-btn" class="swap-btn {{ button_status }}">SWAP NOW</button>
     </div>
     <div class="explanation">
         <p class="en">* All your tokens from the bot give you an advantage in the game. Exchange all of it and start farming our in-game currency which is gonna be exchanget to actual $LAMA tokens.</p>
     </div>
+
+    <script src="../static/js/swap.js"></script>
 </body>
 </html>

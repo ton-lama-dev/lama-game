@@ -23,9 +23,12 @@
 body {
     background-color: white;
     background: linear-gradient(#FED9FF, #EDA9FF);
-    width: 100%;
-    height: 100%;
     overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .container {
