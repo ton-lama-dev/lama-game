@@ -1,17 +1,16 @@
-// let tg = window.Telegram.WebApp;
-// let user_tg_id = tg.initDataUnsafe.user.id;
-let user_tg_id = 6257396100;
+let tg = window.Telegram.WebApp;
+let user_tg_id = tg.initDataUnsafe.user.id;
 
-const homeUrl = "https://fb92-217-25-86-81.ngrok-free.app/"
+const homeUrl = "https://playlama.fun/"
 
 const $claim_button = document.getElementById("claim-btn");
 
-// tg.BackButton.show()
+tg.BackButton.show()
 
-// tg.onEvent('backButtonClicked', backCallback)
-// function backCallback() {
-//     window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
-// };
+tg.onEvent('backButtonClicked', backCallback)
+function backCallback() {
+    window.location.href = homeUrl + `main?user_id=${user_tg_id}`;
+};
 
 function wait(ms){
     var start = new Date().getTime();

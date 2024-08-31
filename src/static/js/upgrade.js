@@ -1,7 +1,7 @@
 let tg = window.Telegram.WebApp;
 let user_tg_id = tg.initDataUnsafe.user.id;
 
-const homeUrl = "https://fb92-217-25-86-81.ngrok-free.app/"
+const homeUrl = "https://playlama.fun/"
 
 let $tapUpgradeButton = document.getElementById("tap-upgrade-btn");
 let $energyUpgradeButton = document.getElementById("energy-upgrade-btn");
