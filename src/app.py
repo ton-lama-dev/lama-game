@@ -97,7 +97,6 @@ async def daily():
         else:
             days[i]["status"] = "default"
         days[i]["reward"] = cf.DAILY_REWARDS[i - 1]
-        print(days[i]["reward"])
 
     button_status = "enabled" if last_claim_and_today_difference == 1 or streak == 1 else "disabled"
 
