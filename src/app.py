@@ -112,12 +112,19 @@ async def claim():
     db.set(item="streak", value=new_streak, user_id=user_id)
 
     balance = int(db.get(item="balance", user_id=user_id))
-    new_balance = balance + cf.DAILY_REWARDS[streak - 1]
+    num = cf.DAILY_REWARDS[streak - 1]
+    new_balance = balance + num
     db.set(item="balance", value=new_balance, user_id=user_id)
 
     db.set(item="last_claim", value="CURRENT_TIMESTAMP", user_id=user_id)
     if streak >= 12:
         db.set(item="streak", value=1, user_id=user_id)
+
+    referrer_id = int(db.get(item="referrer_id", user_id=user_id))
+    if not referrer_id == 0:
+        referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
+        referrer_reward = round(num * referrer_revenue / 100)
+        db.reward_user(user_id=referrer_id, num=referrer_reward)
 
     return "200"
 
@@ -256,14 +263,16 @@ def finish_task(user_id: int, task_id: int):
 async def update():
     data = await request.json
     user_id = data.get("user_id")
-    balance = data.get("balance")
+    balance = int(data.get("balance"))
+    old_balance = int(db.get(item="balance", user_id=user_id))
     energy_available = data.get("energy_available")
     db.set(item="balance", value=balance, user_id=user_id)
     db.set(item="energy_available", value=energy_available, user_id=user_id)
     referrer_id = int(db.get(item="referrer_id", user_id=user_id))
     if not referrer_id == 0:
+        difference = balance - old_balance
         referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
-        referrer_reward = round(reward * referrer_revenue / 100)
+        referrer_reward = round(difference * referrer_revenue / 100)
         db.reward_user(user_id=referrer_id, num=referrer_reward)
     return "200"
 
