@@ -125,6 +125,7 @@ body {
 .claim {
     font-family: "Hugmate";
     font-size: 250%;
+    color: black;
     padding: 5%;
     border-radius: 20px;
     box-shadow: 0 5px 0 #ccc, 0 10px 15px rgba(0, 0, 0, 0.1);
