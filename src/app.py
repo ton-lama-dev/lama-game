@@ -246,9 +246,10 @@ def finish_task(user_id: int, task_id: int):
     reward = int(db.tasks_get(item="reward", task_id=task_id))
     db.reward_user(user_id=user_id, num=reward)
     referrer_id = int(db.get(item="referrer_id", user_id=user_id))
-    referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
-    referrer_reward = round(reward * referrer_revenue / 100)
-    db.reward_user(user_id=referrer_id, num=referrer_reward)
+    if not referrer_id == 0:
+        referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
+        referrer_reward = round(reward * referrer_revenue / 100)
+        db.reward_user(user_id=referrer_id, num=referrer_reward)
 
 
 @app.route("/update", methods=["POST"])
@@ -259,6 +260,11 @@ async def update():
     energy_available = data.get("energy_available")
     db.set(item="balance", value=balance, user_id=user_id)
     db.set(item="energy_available", value=energy_available, user_id=user_id)
+    referrer_id = int(db.get(item="referrer_id", user_id=user_id))
+    if not referrer_id == 0:
+        referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
+        referrer_reward = round(reward * referrer_revenue / 100)
+        db.reward_user(user_id=referrer_id, num=referrer_reward)
     return "200"
 
 
