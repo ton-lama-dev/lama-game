@@ -50,7 +50,7 @@ async def friends():
     data = dict()
     friends_ids = db.get_friends_ids(user_id=user_id)
     for id in friends_ids:
-        revenue = round(db.get(item="balance", user_id=id) / 100 * int(db.get(item="revenue_percent", user_id=user_id)))
+        revenue = int(round(db.get(item="balance", user_id=id) / 100 * int(db.get(item="revenue_percent", user_id=user_id))))
         name = db.get(item="name", user_id=id)
         data[id] = {"revenue": revenue,
                     "name": name}
@@ -245,6 +245,10 @@ def finish_task(user_id: int, task_id: int):
     db.subscribe_user(task_id=task_id, user_id=user_id)
     reward = int(db.tasks_get(item="reward", task_id=task_id))
     db.reward_user(user_id=user_id, num=reward)
+    referrer_id = int(db.get(item="referrer_id", user_id=user_id))
+    referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
+    referrer_reward = round(reward * referrer_revenue / 100)
+    db.reward_user(user_id=referrer_id, num=referrer_reward)
 
 
 @app.route("/update", methods=["POST"])
