@@ -1,12 +1,13 @@
 body {
     font-family: "Noto Sans";
+    display: flex;
 }
 
 .block {
     padding: 3%;
     margin: 2%;
     text-align: center;
-    display: inline-block;
+    /* display: inline-block; */
     border: 2px dashed;
 }
 
@@ -14,3 +15,11 @@ body {
 .submit-btn {
     font-size: 200%;
 }
+
+
+@media (max-width: 1250px) {
+    body {
+        flex-direction: column;
+    }
+}
+  
