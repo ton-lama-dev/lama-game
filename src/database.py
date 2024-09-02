@@ -50,6 +50,12 @@ def add_task(id: int, description: str, name: str, reward: int,
                        (id, public_link, description, name, reward, link, img_link, needs_checking))
         conn.commit()
 
+def del_task(id: int):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM tasks WHERE id = ?", (id, ))
+        conn.commit()
+
 
 def register_user(user_id, referrer_id=0, name="name"):
     with connect_db() as conn:
@@ -178,6 +184,15 @@ def get_tasks_ids(user_id: int) -> list[int]:
         result = [i[0] for i in data]
 
         return result
+
+
+def get_users_data() -> tuple:
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT balance, last_login, reg_date FROM users")
+        data = cursor.fetchall()
+
+        return data
 
 
 def get_all_tasks_ids() -> list[int]:

@@ -188,6 +188,48 @@ def get_tasks_data(tasks_ids: list, user_id=0):
 
     return data
 
+def get_users_data() -> dict:
+    raw_data = db.get_users_data()
+    balances = list()
+    now = datetime.now()
+    today, week, month, dau, wau = 0, 0, 0, 0, 0
+
+    for i in raw_data:
+        balance = int(i[0])
+        last_login = datetime.strptime(i[1], "%Y-%m-%d %H:%M:%S")
+        now_and_last_login_difference = (now - last_login).days
+        if now_and_last_login_difference <= 1:
+            dau += 1
+            wau += 1
+        elif now_and_last_login_difference <= 6:
+            wau += 1
+        reg_date = datetime.strptime(i[2], "%Y-%m-%d %H:%M:%S")
+        now_and_reg_date_difference = (now - reg_date).days
+        if now_and_reg_date_difference == 0:
+            today += 1
+            week += 1
+            month += 1
+        elif now_and_reg_date_difference <= 6:
+            week += 1
+            month += 1
+        elif now_and_reg_date_difference <= 30:
+            month += 1
+        balances.append(balance)
+
+    total_balance = sum(balances)
+    number_of_users = len(balances)
+    average_balance = total_balance / number_of_users
+
+    result = {"all": number_of_users,
+              "today": today,
+              "week": week,
+              "month": month,
+              "dau": dau,
+              "wau": wau,
+              "total_balance": total_balance,
+              "average_balance": average_balance}
+    return result
+
 
 @app.route("/pre-swap")
 async def pre_swap():
@@ -281,7 +323,8 @@ async def update():
 async def admin():
     tasks_ids = db.get_all_tasks_ids()
     data = get_tasks_data(tasks_ids=tasks_ids)
-    return await render_template("admin.html", data=data)
+    users = get_users_data()
+    return await render_template("admin.html", data=data, users=users)
 
 
 @app.route("/upgrade_tap", methods=["POST"])
@@ -327,6 +370,20 @@ async def add_task():
         return "<h1>task added successfully</h1>"
     return "<h1>error</h1>"
 
+@app.route("/delete_task", methods=["POST"])
+async def delete_task():
+    form_data = await request.form
+    password = form_data.get("password")
+    task_id = int(form_data.get("task_id"))
+
+    if password == cf.ADMIN_PASS:
+        try:
+            db.del_task(id=task_id)
+            return "<h1>task deleted successfully</h1>"
+        except:
+            return "<h1>database error</h1>"
+    return "<h1>error</h1>"
+    
 
 if __name__ == "__main__":
     db.init_db()

@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link rel="stylesheet" href="../static/css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="add-task-container">
+    <div class="block add-task">
         <h1>Add task</h1>
         <form action="add_task" method="post">
             <label for="password">Password </label>
@@ -46,13 +49,40 @@
         </form>
     </div>
 
-    <div class="tasks-list-container">
+    <div class="block tasks-list">
         <h1>Tasks list</h1>
         {% if data != None %}
             {% for key, value in data.items() %}
                 <p>id: {{ value["task_id"] }} name: {{ value["name"] }} link: {{ value["link"] }} done: {{ value["times_done"] }}</p>
             {% endfor %}
         {% endif %}
+    </div>
+
+    <div class="block delete-task">
+        <h1>Delete task</h1>
+        <form action="delete_task" method="post">
+            <label for="password">Password </label>
+            <input type="text" name="password">
+            <br>
+            <br>
+            <label for="task_id">Task id: </label>
+            <input type="number" name="task_id">
+            <br>
+            <br>
+            <input class="submit-btn" type="submit" value="Delete">
+        </form>
+    </div>
+
+    <div class="block users">
+        <h1>Statistic</h1>
+        <h3>All users: {{ users.all }}</h3>
+        <p>Today: {{ users.today }}</p>
+        <p>Last week: {{ users.week }}</p>
+        <p>Last month: {{ users.month }}</p>
+        <h3>DAU: {{ users.dau }}</h3>
+        <h3>WAU: {{ users.wau }}</h3>
+        <h3>Total Balance: {{ users.total_balance }}</h3>
+        <h3>Average Balance: {{ users.average_balance }}</h3>
     </div>
 </body>
 </html>

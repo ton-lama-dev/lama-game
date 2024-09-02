@@ -1,4 +1,8 @@
-.add-task-container {
+body {
+    font-family: "Noto Sans";
+}
+
+.block {
     padding: 3%;
     margin: 2%;
     text-align: center;
