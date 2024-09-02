@@ -277,7 +277,7 @@ async def update():
     return "200"
 
 
-@app.route("/admin")
+@app.route("/UQBg5Ame1AjU9wp0DhyAHPvgSgj6fsQWxquA25DNq_gO8kpE")
 async def admin():
     tasks_ids = db.get_all_tasks_ids()
     data = get_tasks_data(tasks_ids=tasks_ids)
