@@ -20,12 +20,18 @@
     -webkit-tap-highlight-color: transparent; 
 }
 
+html {
+    background-color: #F7C6FF;
+    height: 100%;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: white;
-    background: linear-gradient(#FED9FF, #EDA9FF);
-    overflow: hidden;
+    /* background-color: white; */
+    /* background: linear-gradient(#FED9FF, #EDA9FF); */
+    overflow-y: auto;
     width: 100vw;
-    height: 100vh;
+    height: auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
