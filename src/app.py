@@ -47,14 +47,15 @@ def get_refilled_energy(user_id: int) -> int:
 @app.route("/friends")
 async def friends():
     user_id = int(request.args.get("user_id"))
+    revenue_percent = int(db.get(item="revenue_percent", user_id=user_id))
     data = dict()
     friends_ids = db.get_friends_ids(user_id=user_id)
     for id in friends_ids:
-        revenue = int(round(db.get(item="balance", user_id=id) / 100 * int(db.get(item="revenue_percent", user_id=user_id))))
+        revenue = int(round(db.get(item="balance", user_id=id) / 100 * revenue_percent))
         name = db.get(item="name", user_id=id)
         data[id] = {"revenue": revenue,
                     "name": name}
-    return await render_template("friends.html", data=data)
+    return await render_template("friends.html", data=data, revenue_percent=revenue_percent)
 
 
 @app.route("/upgrade")
@@ -380,6 +381,21 @@ async def delete_task():
         try:
             db.del_task(id=task_id)
             return "<h1>task deleted successfully</h1>"
+        except:
+            return "<h1>database error</h1>"
+    return "<h1>error</h1>"
+
+@app.route("/set_revenue", methods=["POST"])
+async def set_revenue():
+    form_data = await request.form
+    password = form_data.get("password")
+    user_id = int(form_data.get("user_id"))
+    new_revenue = int(form_data.get("percent"))
+
+    if password == cf.ADMIN_PASS:
+        try:
+            db.set(item="revenue_percent", value=new_revenue, user_id=user_id)
+            return "<h1>revenue set successfully</h1>"
         except:
             return "<h1>database error</h1>"
     return "<h1>error</h1>"

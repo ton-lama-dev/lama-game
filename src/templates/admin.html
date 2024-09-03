@@ -73,6 +73,25 @@
         </form>
     </div>
 
+    <div class="block set_revenue">
+        <h1>Set revenue</h1>
+        <form action="set_revenue" method="post">
+            <label for="password">Password: </label>
+            <input type="text" name="password">
+            <br>
+            <br>
+            <label for="user_id">User ID: </label>
+            <input type="number" name="user_id">
+            <br>
+            <br>
+            <label for="percent">Percent: </label>
+            <input type="number" name="percent">
+            <br>
+            <br>
+            <input class="submit-btn" type="submit" value="Set">
+        </form>
+    </div>
+
     <div class="block users">
         <h1>Statistic</h1>
         <h3>All users: {{ users.all }}</h3>

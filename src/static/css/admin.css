@@ -11,13 +11,17 @@ body {
     border: 2px dashed;
 }
 
+.danger {
+    border-color: red;
+}
+
 
 .submit-btn {
     font-size: 200%;
 }
 
 
-@media (max-width: 1250px) {
+@media (max-width: 1800px) {
     body {
         flex-direction: column;
     }
