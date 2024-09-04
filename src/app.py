@@ -399,6 +399,30 @@ async def set_revenue():
         except:
             return "<h1>database error</h1>"
     return "<h1>error</h1>"
+
+@app.route("/db_set", methods=["POST"])
+async def db_set():
+    form_data = await request.form
+    password = form_data.get("password")
+    id = int(form_data.get("user_id"))
+    table = form_data.get("table")
+    column = form_data.get("column")
+    value = form_data.get("value")
+    print(value)
+
+    if password == cf.ADMIN_PASS:
+        # try:
+            if table == "tasks":
+                db.tasks_set(item=column, value=value, task_id=id)
+            elif table == "users":
+                db_set(item=column, value=value, user_id=id)
+            else:
+                return "<h1>there is no such table</h1>"
+            return "<h1>revenue set successfully</h1>"
+        # except Exception as e:
+        #     print(e)
+        #     return "<h1>database error</h1>"
+    return "<h1>error</h1>"
     
 
 if __name__ == "__main__":

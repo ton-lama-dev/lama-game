@@ -92,6 +92,33 @@
         </form>
     </div>
 
+    <div class="block db_set">
+        <h1>Change DB</h1>
+        <form action="db_set" method="post">
+            <label for="password">Password: </label>
+            <input type="text" name="password">
+            <br>
+            <br>
+            <label for="user_id">User/Task ID: </label>
+            <input type="number" name="user_id">
+            <br>
+            <br>
+            <label for="table">Table: </label>
+            <input type="text" name="table">
+            <br>
+            <br>
+            <label for="column">Column: </label>
+            <input type="text" name="column">
+            <br>
+            <br>
+            <label for="value">Value: </label>
+            <input type="text" name="value">
+            <br>
+            <br>
+            <input class="submit-btn" type="submit" value="Set">
+        </form>
+    </div>
+
     <div class="block users">
         <h1>Statistic</h1>
         <h3>All users: {{ users.all }}</h3>

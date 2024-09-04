@@ -232,11 +232,19 @@ def get(item: str, user_id: int):
         cursor.execute(f"SELECT {item} FROM users WHERE tg_id = ?", (user_id, ))
         return cursor.fetchone()[0]
 
+
 def tasks_get(item: str, task_id: int):
     with connect_db() as conn:
         cursor = conn.cursor()
         cursor.execute(f"SELECT {item} FROM tasks WHERE id = ?", (task_id, ))
         return cursor.fetchone()[0]
+
+def tasks_set(item: str, value, task_id: int):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE tasks SET {item} = ? WHERE id = ?", (value, task_id))
+        conn.commit()
+
 
 def set(item: str, value, user_id: int):
     with connect_db() as conn:
