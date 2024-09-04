@@ -87,9 +87,12 @@ async def daily():
                 days[i]["status"] = "active"
                 days[i]["reward"] = cf.DAILY_REWARDS[i - 1]
                 continue
-            if last_claim_and_today_difference == 1:
+            elif last_claim_and_today_difference == 1:
                 days[i]["status"] = "active"
-            if last_claim_and_today_difference < 1:
+            elif last_claim_and_today_difference > 1:
+                db.set(item="streak", value=1, user_id=user_id)
+                days[1]["status"] = "active"
+            elif last_claim_and_today_difference == 0:
                 days[i]["status"] = "default"
             else:
                 days[i]["status"] = "passive"
