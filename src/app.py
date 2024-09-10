@@ -311,12 +311,17 @@ async def update():
     user_id = data.get("user_id")
     balance = int(data.get("balance"))
     old_balance = int(db.get(item="balance", user_id=user_id))
+    difference = balance - old_balance
     energy_available = data.get("energy_available")
-    db.set(item="balance", value=balance, user_id=user_id)
+    if difference <= 0:
+        return "200"
+    elif difference > 2000:
+        return "200"
+    else:
+        db.set(item="balance", value=balance, user_id=user_id)
     db.set(item="energy_available", value=energy_available, user_id=user_id)
     referrer_id = int(db.get(item="referrer_id", user_id=user_id))
     if not referrer_id == 0:
-        difference = balance - old_balance
         referrer_revenue = int(db.get(item="revenue_percent", user_id=referrer_id))
         referrer_reward = round(difference * referrer_revenue / 100)
         db.reward_user(user_id=referrer_id, num=referrer_reward)
